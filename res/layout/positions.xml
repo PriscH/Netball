@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="0dp"
+                  android:gravity="center_horizontal" android:layout_weight="1" android:weightSum="2">
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="D"
+                android:id="@+id/button_goalshoot" android:layout_weight="1"
+                android:textSize="40dp" android:layout_gravity="center_horizontal|bottom"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" android:gravity="center_horizontal" android:layout_weight="1">
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="HD"
+                android:id="@+id/button_goalattack" android:textSize="40dp" android:layout_weight="1"/>
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="AV"
+                android:id="@+id/button_wingattack" android:textSize="40dp" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" android:layout_weight="1" android:gravity="center_horizontal"
+            android:weightSum="2">
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="S"
+                android:id="@+id/button_center" android:layout_gravity="center_horizontal" android:layout_weight="1"
+                android:textSize="40dp" android:singleLine="false"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                  android:layout_height="0dp" android:gravity="center_horizontal"
+                  android:id="@+id/linearLayout" android:layout_weight="1">
+        <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="VV"
+                android:id="@+id/button_wingdefense" android:textSize="40dp" android:layout_weight="1"/>
+        <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="HV"
+                android:id="@+id/button_goaldefense" android:textSize="40dp" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" android:layout_weight="1" android:gravity="center_horizontal"
+            android:weightSum="2">
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="V"
+                android:id="@+id/button_goalkeeper" android:layout_gravity="center_horizontal" android:layout_weight="1"
+                android:textSize="40dp"/>
+    </LinearLayout>
+</LinearLayout>
