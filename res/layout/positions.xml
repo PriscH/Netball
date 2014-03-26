@@ -9,7 +9,7 @@
         <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="D"
+                android:text="GS"
                 android:id="@+id/button_goalshoot" android:layout_weight="1"
                 android:textSize="40dp" android:layout_gravity="center_horizontal|bottom"/>
     </LinearLayout>
@@ -20,12 +20,12 @@
         <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="HD"
+                android:text="GA"
                 android:id="@+id/button_goalattack" android:textSize="40dp" android:layout_weight="1"/>
         <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="AV"
+                android:text="WA"
                 android:id="@+id/button_wingattack" android:textSize="40dp" android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -36,16 +36,16 @@
         <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="S"
+                android:text="C"
                 android:id="@+id/button_center" android:layout_gravity="center_horizontal" android:layout_weight="1"
                 android:textSize="40dp" android:singleLine="false"/>
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
                   android:layout_height="0dp" android:gravity="center_horizontal"
                   android:id="@+id/linearLayout" android:layout_weight="1">
-        <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="VV"
+        <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="WD"
                 android:id="@+id/button_wingdefense" android:textSize="40dp" android:layout_weight="1"/>
-        <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="HV"
+        <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="GD"
                 android:id="@+id/button_goaldefense" android:textSize="40dp" android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -56,7 +56,7 @@
         <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:text="V"
+                android:text="GK"
                 android:id="@+id/button_goalkeeper" android:layout_gravity="center_horizontal" android:layout_weight="1"
                 android:textSize="40dp"/>
     </LinearLayout>
