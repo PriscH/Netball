@@ -11,7 +11,7 @@
                 android:layout_height="fill_parent"
                 android:text="GS"
                 android:id="@+id/button_goalshoot" android:layout_weight="1"
-                android:textSize="40dp" android:layout_gravity="center_horizontal|bottom"/>
+                android:textSize="40dp" android:layout_gravity="center_horizontal|bottom" android:textColor="@android:color/black"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -21,12 +21,14 @@
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:text="GA"
-                android:id="@+id/button_goalattack" android:textSize="40dp" android:layout_weight="1"/>
+                android:id="@+id/button_goalattack" android:textSize="40dp" android:layout_weight="1"
+                android:textColor="@android:color/black"/>
         <Button
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:text="WA"
-                android:id="@+id/button_wingattack" android:textSize="40dp" android:layout_weight="1"/>
+                android:id="@+id/button_wingattack" android:textSize="40dp" android:layout_weight="1"
+                android:textColor="@android:color/black"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -38,15 +40,17 @@
                 android:layout_height="fill_parent"
                 android:text="C"
                 android:id="@+id/button_center" android:layout_gravity="center_horizontal" android:layout_weight="1"
-                android:textSize="40dp" android:singleLine="false"/>
+                android:textSize="40dp" android:singleLine="false" android:textColor="@android:color/black"/>
     </LinearLayout>
     <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
                   android:layout_height="0dp" android:gravity="center_horizontal"
                   android:id="@+id/linearLayout" android:layout_weight="1">
         <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="WD"
-                android:id="@+id/button_wingdefense" android:textSize="40dp" android:layout_weight="1"/>
+                android:id="@+id/button_wingdefense" android:textSize="40dp" android:layout_weight="1"
+                android:textColor="@android:color/black"/>
         <Button android:layout_width="0dp" android:layout_height="fill_parent" android:text="GD"
-                android:id="@+id/button_goaldefense" android:textSize="40dp" android:layout_weight="1"/>
+                android:id="@+id/button_goaldefense" android:textSize="40dp" android:layout_weight="1"
+                android:textColor="@android:color/black"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -58,6 +62,6 @@
                 android:layout_height="fill_parent"
                 android:text="GK"
                 android:id="@+id/button_goalkeeper" android:layout_gravity="center_horizontal" android:layout_weight="1"
-                android:textSize="40dp"/>
+                android:textSize="40dp" android:textColor="@android:color/black"/>
     </LinearLayout>
 </LinearLayout>

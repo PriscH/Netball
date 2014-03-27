@@ -1,4 +1,4 @@
-package com.prisch.activities;
+package com.prisch.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.prisch.R;
 
-public class GoalShootFragment extends Fragment {
+public class MisplaysFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_goalshoot, container, false);
+        return inflater.inflate(R.layout.fragment_misplays, container, false);
     }
 }
