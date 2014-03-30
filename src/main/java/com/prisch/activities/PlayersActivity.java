@@ -2,8 +2,11 @@ package com.prisch.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +19,7 @@ import com.prisch.R;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
 
-public class PlayersActivity extends Activity {
+public class PlayersActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private CursorAdapter adapter;
 
@@ -25,12 +28,13 @@ public class PlayersActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.players);
 
         final ListView playersListView = (ListView)findViewById(R.id.playersListView);
-        adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, findAllPlayers(), new String[] {Player.COLUMN_NAME}, new int[] {android.R.id.text1}, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] {Player.COLUMN_NAME}, new int[] {android.R.id.text1}, 0);
         playersListView.setAdapter(adapter);
+
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -39,10 +43,19 @@ public class PlayersActivity extends Activity {
         return true;
     }
 
-    // ===== Cursor Builders =====
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, NetballContentProvider.URI_PLAYERS, null, null, null, Player.COLUMN_NAME);
+    }
 
-    private Cursor findAllPlayers() {
-        return getContentResolver().query(NetballContentProvider.URI_PLAYERS, null, null, null, Player.COLUMN_NAME);
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
     }
 
     // ===== Event Handlers =====
@@ -85,7 +98,5 @@ public class PlayersActivity extends Activity {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Player.COLUMN_NAME, name);
         getContentResolver().insert(NetballContentProvider.URI_PLAYERS, contentValues);
-
-        adapter.changeCursor(findAllPlayers());
     }
 }
