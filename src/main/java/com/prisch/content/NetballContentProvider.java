@@ -88,11 +88,37 @@ public class NetballContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+
+        int count;
+        int uriType = URI_MATCHER.match(uri);
+        switch (uriType) {
+            case CODE_PLAYERS:
+                count = database.delete(Player.TABLE, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+
+        int count;
+        int uriType = URI_MATCHER.match(uri);
+        switch (uriType) {
+            case CODE_PLAYERS:
+                count = database.update(Player.TABLE, values, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
     }
 }
