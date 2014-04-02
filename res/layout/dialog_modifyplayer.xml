@@ -10,10 +10,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Change player's name"
-            android:id="@+id/button_changename"/>
+            android:id="@+id/button_changeName"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete player"
-            android:id="@+id/button_deleteplayer"/>
+            android:id="@+id/button_deletePlayer"/>
 </LinearLayout>

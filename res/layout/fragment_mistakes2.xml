@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:text="CONTACT"
                 android:id="@+id/textView" android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp" android:clickable="false" android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp" android:clickable="false"
                 android:password="false" android:singleLine="false"/>
     </FrameLayout>
     <FrameLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="1"
@@ -31,7 +31,7 @@
                      android:adjustViewBounds="false" android:paddingBottom="30dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OBSTRUCTION"
                   android:id="@+id/textView1" android:layout_gravity="center_horizontal|bottom"
-                  android:layout_marginBottom="8dp" android:textColor="@android:color/black"/>
+                  android:layout_marginBottom="8dp"/>
     </FrameLayout>
     <FrameLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="1"
                  android:id="@+id/frameLayout">
@@ -41,6 +41,6 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="HANDLING"
                   android:id="@+id/textView2" android:layout_gravity="center_horizontal|bottom"
                   android:layout_marginBottom="8dp" android:singleLine="false"
-                  android:textColor="@android:color/black"/>
+                />
     </FrameLayout>
 </LinearLayout>

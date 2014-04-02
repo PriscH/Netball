@@ -128,7 +128,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
         final View dialogView = getLayoutInflater().inflate(R.layout.dialog_modifyplayer, null);
         final Dialog dialog = new AlertDialog.Builder(this).setView(dialogView).create();
 
-        dialogView.findViewById(R.id.button_changename).setOnClickListener(new View.OnClickListener() {
+        dialogView.findViewById(R.id.button_changeName).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
@@ -137,7 +137,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
             }
         });
 
-        dialogView.findViewById(R.id.button_deleteplayer).setOnClickListener(new View.OnClickListener() {
+        dialogView.findViewById(R.id.button_deletePlayer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String where = Player.COLUMN_ID + "=?";
