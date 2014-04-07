@@ -23,6 +23,7 @@
         <activity android:name=".activities.PositionsActivity" />
         <activity android:name=".activities.ActionsActivity" />
         <activity android:name=".activities.PlayersActivity" />
+        <activity android:name=".activities.TeamActivity" />
 
         <provider
                 android:name=".content.NetballContentProvider"

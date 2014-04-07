@@ -29,10 +29,10 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.players);
 
-        ListView listView = (ListView)findViewById(R.id.playersListView);
         adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] {Player.COLUMN_NAME}, new int[] {android.R.id.text1}, 0);
-        listView.setAdapter(adapter);
 
+        ListView listView = (ListView)findViewById(R.id.playersListView);
+        listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
