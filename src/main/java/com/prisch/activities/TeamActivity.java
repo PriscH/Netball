@@ -1,12 +1,12 @@
 package com.prisch.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.*;
 import com.prisch.R;
@@ -42,11 +42,11 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.team);
+        setContentView(R.layout.players);
 
         adapter = new SimpleCursorAdapter(this, R.layout.list_teamassign, null, new String[] {Player.COLUMN_NAME}, new int[] {R.id.playerName}, 0);
 
-        ListView listView = (ListView)findViewById(R.id.teamListView);
+        ListView listView = (ListView)findViewById(R.id.playersListView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,13 +57,10 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
 
         getLoaderManager().initLoader(0, null, this);
 
-        updateSelectionBar();
-    }
+        getActionBar().setCustomView(R.layout.actionbar_selectteam);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        updateActionBar();
     }
 
     @Override
@@ -98,17 +95,20 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
             outstandingPositions.add(0, previousPosition);
         }
 
-        updateSelectionBar();
+        updateActionBar();
     }
 
     // ===== Helper Methods =====
 
-    private void updateSelectionBar() {
-        TextView instructionText = (TextView)findViewById(R.id.text_selectPosition);
+    private void updateActionBar() {
+        TextView instructionText = (TextView)getActionBar().getCustomView().findViewById(R.id.text_selectPosition);
+        Button acceptButton = (Button)getActionBar().getCustomView().findViewById(R.id.button_teamAccept);
         if (outstandingPositions.isEmpty()) {
             instructionText.setText("");
+            acceptButton.setEnabled(true);
         } else {
             instructionText.setText("Select the " + outstandingPositions.get(0));
+            acceptButton.setEnabled(false);
         }
     }
 }
