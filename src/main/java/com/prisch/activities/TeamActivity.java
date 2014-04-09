@@ -14,24 +14,26 @@ import com.prisch.R;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
 import com.prisch.model.Position;
+import com.prisch.repositories.GameRepository;
+import com.prisch.repositories.TeamRepository;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TeamActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private GameRepository gameRepository;
+    private TeamRepository teamRepository;
+
     private CursorAdapter adapter;
 
-    private List<String> outstandingPositions = new LinkedList<String>();
-    private Map<Long, String> teamMap = new HashMap<Long, String>(7);
+    private List<Position> outstandingPositions = new LinkedList<Position>();
+    private Map<Long, Position> teamMap = new HashMap<Long, Position>(7);
 
     // ===== Constructor =====
 
     public TeamActivity() {
         for (Position position : Position.values()) {
-            outstandingPositions.add(position.toString());
+            outstandingPositions.add(position);
         }
     }
 
@@ -41,6 +43,9 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.players);
+
+        gameRepository = new GameRepository(this);
+        teamRepository = new TeamRepository(this);
 
         adapter = new SimpleCursorAdapter(this, R.layout.list_teamassign, null, new String[] {Player.COLUMN_NAME}, new int[] {R.id.playerName}, 0);
 
@@ -87,21 +92,22 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     // ===== Event Handlers =====
 
     private void acceptTeam() {
-
+        long gameId = gameRepository.createGame(new Date());
+        teamRepository.createTeam(gameId, teamMap);
 
         Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
         startActivity(positionsIntent);
     }
 
     private void togglePlayerPosition(long playerId, TextView positionView) {
-        String previousPosition = teamMap.remove(playerId);
+        Position previousPosition = teamMap.remove(playerId);
 
         if (outstandingPositions.isEmpty()) {
             positionView.setText("");
         } else {
-            String position = outstandingPositions.remove(0);
+            Position position = outstandingPositions.remove(0);
             teamMap.put(playerId, position);
-            positionView.setText(position);
+            positionView.setText(position.toString());
         }
 
         if (previousPosition != null) {
