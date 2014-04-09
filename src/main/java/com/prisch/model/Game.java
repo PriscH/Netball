@@ -22,7 +22,7 @@ public class Game {
     public static final String COLUMN_DATE = "date";
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
-                                                + COLUMN_ID     + " INTEGER PRIMARY KEY, "
+                                                + COLUMN_ID     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                 + COLUMN_DATE   + " INTEGER NOT NULL UNIQUE);";
     private static final String DROP_SCRIPT = "DROP TABLE " + TABLE;
 

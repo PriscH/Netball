@@ -22,7 +22,7 @@ public class Player {
     public static final String COLUMN_NAME = "name";
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
-                                                + COLUMN_ID     + " INTEGER PRIMARY KEY, "
+                                                + COLUMN_ID     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                 + COLUMN_NAME   + " TEXT NOT NULL UNIQUE);";
     private static final String DROP_SCRIPT = "DROP TABLE " + TABLE;
 }

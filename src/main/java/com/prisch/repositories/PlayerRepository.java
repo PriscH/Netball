@@ -1,7 +1,9 @@
 package com.prisch.repositories;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
 
@@ -15,11 +17,12 @@ public class PlayerRepository {
 
     // ===== Interface =====
 
-    public void createPlayer(String name) {
+    public long createPlayer(String name) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Player.COLUMN_NAME, name);
 
-        context.getContentResolver().insert(NetballContentProvider.URI_PLAYERS, contentValues);
+        Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_PLAYERS, contentValues);
+        return ContentUris.parseId(resultUri);
     }
 
     public void deletePlayer(Long id) {

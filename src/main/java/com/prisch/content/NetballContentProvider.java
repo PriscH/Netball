@@ -38,6 +38,7 @@ public class NetballContentProvider extends ContentProvider {
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
     private static final Map<Integer, String> URI_TABLE_MAP = new HashMap<Integer, String>();
+    private static final Map<Integer, String> URI_PATH_MAP = new HashMap<Integer, String>();
 
     private DatabaseHelper databaseHelper;
 
@@ -51,6 +52,10 @@ public class NetballContentProvider extends ContentProvider {
         URI_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
         URI_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
         URI_TABLE_MAP.put(CODE_TEAMS, Team.TABLE);
+
+        URI_PATH_MAP.put(CODE_PLAYERS, PATH_PLAYERS);
+        URI_PATH_MAP.put(CODE_GAMES, PATH_GAMES);
+        URI_PATH_MAP.put(CODE_TEAMS, PATH_TEAMS);
     }
 
     // ===== Inherited Operations =====
@@ -94,7 +99,9 @@ public class NetballContentProvider extends ContentProvider {
         long id = database.insert(URI_TABLE_MAP.get(uriType), null, values);
 
         getContext().getContentResolver().notifyChange(uri, null);
-        return Uri.parse(PATH_PLAYERS + "/" + id);
+
+        String path = URI_PATH_MAP.get(uriType);
+        return Uri.parse(path + "/" + id);
     }
 
     @Override

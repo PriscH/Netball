@@ -24,7 +24,7 @@ public class Team {
     public static final String COLUMN_POSITION = "position";
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
-                                                + COLUMN_ID         + " INTEGER PRIMARY KEY, "
+                                                + COLUMN_ID         + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                 + COLUMN_GAME_ID    + " INTEGER NOT NULL"
                                                 + COLUMN_PLAYER_ID  + " INTEGER NOT NULL"
                                                 + COLUMN_POSITION   + " TEXT NOT NULL);";

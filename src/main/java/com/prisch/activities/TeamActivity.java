@@ -13,6 +13,7 @@ import android.widget.*;
 import com.prisch.R;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
+import com.prisch.model.Position;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,13 +30,9 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     // ===== Constructor =====
 
     public TeamActivity() {
-        outstandingPositions.add("GS");
-        outstandingPositions.add("GA");
-        outstandingPositions.add("WA");
-        outstandingPositions.add("C");
-        outstandingPositions.add("WD");
-        outstandingPositions.add("GD");
-        outstandingPositions.add("GK");
+        for (Position position : Position.values()) {
+            outstandingPositions.add(position.toString());
+        }
     }
 
     // ===== Lifecycle Methods =====
@@ -65,8 +62,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
-                startActivity(positionsIntent);
+                acceptTeam();
             }
         });
 
@@ -89,6 +85,13 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     }
 
     // ===== Event Handlers =====
+
+    private void acceptTeam() {
+
+
+        Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
+        startActivity(positionsIntent);
+    }
 
     private void togglePlayerPosition(long playerId, TextView positionView) {
         String previousPosition = teamMap.remove(playerId);
