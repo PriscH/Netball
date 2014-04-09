@@ -29,6 +29,7 @@ public class PositionsActivity extends Activity {
         setContentView(R.layout.positions);
 
         teamRepository = new TeamRepository(this);
+        playerRepository = new PlayerRepository(this);
 
         configureButtons();
 
