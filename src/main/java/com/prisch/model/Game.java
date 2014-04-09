@@ -2,7 +2,7 @@ package com.prisch.model;
 
 import android.database.sqlite.SQLiteDatabase;
 
-public class Player {
+public class Game {
 
     // ===== Database Scaffolding =====
 
@@ -17,13 +17,13 @@ public class Player {
 
     // ===== Constants =====
 
-    public static final String TABLE = "player";
+    public static final String TABLE = "game";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_DATE = "date";
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
                                                 + COLUMN_ID     + " INTEGER PRIMARY KEY, "
-                                                + COLUMN_NAME   + " TEXT NOT NULL UNIQUE);";
+                                                + COLUMN_DATE   + " INTEGER NOT NULL UNIQUE);";
     private static final String DROP_SCRIPT = "DROP TABLE " + TABLE;
-}
 
+}

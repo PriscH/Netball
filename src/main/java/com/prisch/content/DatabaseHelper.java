@@ -3,6 +3,7 @@ package com.prisch.content;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.prisch.model.Game;
 import com.prisch.model.Player;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -16,11 +17,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Player.onCreate(db);
+        Game.onCreate(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Player.onUpgrade(db, oldVersion, newVersion);
+        Game.onUpgrade(db, oldVersion, newVersion);
     }
 
     // ===== Constants =====
