@@ -33,8 +33,8 @@ public class DashboardActivity extends Activity {
         buttonRecordGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent positionsIntent = new Intent(getApplicationContext(), TeamActivity.class);
-                startActivity(positionsIntent);
+                Intent teamIntent = new Intent(getApplicationContext(), TeamActivity.class);
+                startActivity(teamIntent);
             }
         });
 

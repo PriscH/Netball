@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -59,6 +60,15 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
 
         getActionBar().setCustomView(R.layout.actionbar_selectteam);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        Button acceptButton = (Button)getActionBar().getCustomView().findViewById(R.id.button_teamAccept);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
+                startActivity(positionsIntent);
+            }
+        });
 
         updateActionBar();
     }

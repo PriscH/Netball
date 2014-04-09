@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Loader;
@@ -17,8 +16,11 @@ import android.widget.*;
 import com.prisch.R;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
+import com.prisch.repositories.PlayerRepository;
 
 public class PlayersActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private PlayerRepository playerRepository;
 
     private CursorAdapter adapter;
 
@@ -29,6 +31,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.players);
 
+        playerRepository = new PlayerRepository(this);
         adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] {Player.COLUMN_NAME}, new int[] {android.R.id.text1}, 0);
 
         ListView listView = (ListView)findViewById(R.id.playersListView);
@@ -90,7 +93,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
             .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    addPlayer(nameInput.getText().toString());
+                    playerRepository.createPlayer(nameInput.getText().toString());
                 }
             })
             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -113,7 +116,8 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
                 .setPositiveButton("Rename", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        renamePlayer(position, nameInput.getText().toString());
+                        Long id = adapter.getItemId(position);
+                        playerRepository.renamePlayer(id, nameInput.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -140,28 +144,12 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
         dialogView.findViewById(R.id.button_deletePlayer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String where = Player.COLUMN_ID + "=?";
-                String[] parameters = new String[] {Long.toString(adapter.getItemId(position))};
-                getContentResolver().delete(NetballContentProvider.URI_PLAYERS, where, parameters);
+                playerRepository.deletePlayer(adapter.getItemId(position));
 
                 dialog.dismiss();
             }
         });
 
         dialog.show();
-    }
-
-    private void addPlayer(String name) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Player.COLUMN_NAME, name);
-        getContentResolver().insert(NetballContentProvider.URI_PLAYERS, contentValues);
-    }
-
-    private void renamePlayer(int position, String name) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Player.COLUMN_NAME, name);
-        String where = Player.COLUMN_ID + "=?";
-        String[] parameters = new String[] {Long.toString(adapter.getItemId(position))};
-        getContentResolver().update(NetballContentProvider.URI_PLAYERS, contentValues, where, parameters);
     }
 }
