@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
@@ -14,11 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.prisch.R;
-import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
 import com.prisch.repositories.PlayerRepository;
 
 public class PlayersActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private final static int PLAYER_LOADER = 0;
 
     private PlayerRepository playerRepository;
 
@@ -45,7 +45,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
             }
         });
 
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(PLAYER_LOADER, null, this);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, NetballContentProvider.URI_PLAYERS, null, null, null, Player.COLUMN_NAME);
+        return playerRepository.getAllPlayers();
     }
 
     @Override

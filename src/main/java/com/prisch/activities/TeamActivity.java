@@ -3,7 +3,6 @@ package com.prisch.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -11,16 +10,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import com.prisch.R;
-import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
 import com.prisch.model.Position;
 import com.prisch.repositories.GameRepository;
+import com.prisch.repositories.PlayerRepository;
 import com.prisch.repositories.TeamRepository;
 
 import java.util.*;
 
 public class TeamActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int PLAYER_LOADER = 0;
+
+    private PlayerRepository playerRepository;
     private GameRepository gameRepository;
     private TeamRepository teamRepository;
 
@@ -44,6 +46,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.players);
 
+        playerRepository = new PlayerRepository(this);
         gameRepository = new GameRepository(this);
         teamRepository = new TeamRepository(this);
 
@@ -58,7 +61,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
             }
         });
 
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(PLAYER_LOADER, null, this);
 
         getActionBar().setCustomView(R.layout.actionbar_selectteam);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -76,7 +79,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, NetballContentProvider.URI_PLAYERS, null, null, null, Player.COLUMN_NAME);
+        return playerRepository.getAllPlayers();
     }
 
     @Override

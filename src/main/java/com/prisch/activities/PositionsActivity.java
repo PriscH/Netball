@@ -1,25 +1,27 @@
 package com.prisch.activities;
 
 import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import com.prisch.R;
+import com.prisch.model.Player;
 import com.prisch.model.Position;
-import com.prisch.repositories.PlayerRepository;
+import com.prisch.model.Team;
 import com.prisch.repositories.TeamRepository;
 
-import java.util.Map;
+public class PositionsActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-public class PositionsActivity extends Activity {
-
+    private static final int TEAM_LOADER = 0;
     private static final String BUTTON_FORMAT_PATTERN = "%s<br/><small><small><small>%s</small></small></small>";
 
     private TeamRepository teamRepository;
-    private PlayerRepository playerRepository;
 
     // ===== Lifecycle Methods =====
 
@@ -29,17 +31,30 @@ public class PositionsActivity extends Activity {
         setContentView(R.layout.positions);
 
         teamRepository = new TeamRepository(this);
-        playerRepository = new PlayerRepository(this);
+
+        getLoaderManager().initLoader(TEAM_LOADER, null, this);
 
         configureButtons();
+    }
 
-        // TODO: This in a non blocking way (Content Loader? But that will require URIs that join Games with Teams :[)
-        Map<Long, Position> teamMap = teamRepository.getLatestTeam();
-        Map<Long, String> playerMap = playerRepository.getPlayers();
-        for (long playerId : teamMap.keySet()) {
-            String name = playerMap.get(playerId);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(com.prisch.R.menu.main, menu);
+        return true;
+    }
 
-            switch (teamMap.get(playerId)) {
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return teamRepository.getActiveTeam();
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        while (data.moveToNext()) {
+            String name = data.getString(data.getColumnIndex(Player.COLUMN_NAME));
+            Position position = Position.fromString(data.getString(data.getColumnIndex(Team.COLUMN_POSITION)));
+
+            switch (position) {
                 case GS:
                     Button buttonGS = (Button)findViewById(R.id.button_goalShoot);
                     buttonGS.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GS", name)));
@@ -73,9 +88,8 @@ public class PositionsActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.prisch.R.menu.main, menu);
-        return true;
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Nothing to cleanup
     }
 
     // ===== Helper Methods =====

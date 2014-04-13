@@ -37,7 +37,8 @@ public class NetballContentProvider extends ContentProvider {
     // ===== Fields =====
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-    private static final Map<Integer, String> URI_TABLE_MAP = new HashMap<Integer, String>();
+    private static final Map<Integer, String> URI_QUERY_TABLE_MAP = new HashMap<Integer, String>();
+    private static final Map<Integer, String> URI_WRITE_TABLE_MAP = new HashMap<Integer, String>();
     private static final Map<Integer, String> URI_PATH_MAP = new HashMap<Integer, String>();
 
     private DatabaseHelper databaseHelper;
@@ -49,9 +50,13 @@ public class NetballContentProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, PATH_GAMES, CODE_GAMES);
         URI_MATCHER.addURI(AUTHORITY, PATH_TEAMS, CODE_TEAMS);
 
-        URI_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
-        URI_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
-        URI_TABLE_MAP.put(CODE_TEAMS, Team.TABLE);
+        URI_QUERY_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
+        URI_QUERY_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
+        URI_QUERY_TABLE_MAP.put(CODE_TEAMS, Team.TABLE_JOIN_PLAYERS);
+
+        URI_WRITE_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
+        URI_WRITE_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
+        URI_WRITE_TABLE_MAP.put(CODE_TEAMS, Team.TABLE);
 
         URI_PATH_MAP.put(CODE_PLAYERS, PATH_PLAYERS);
         URI_PATH_MAP.put(CODE_GAMES, PATH_GAMES);
@@ -71,10 +76,10 @@ public class NetballContentProvider extends ContentProvider {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         int uriType = URI_MATCHER.match(uri);
-        if (!URI_TABLE_MAP.containsKey(uriType)) {
+        if (!URI_QUERY_TABLE_MAP.containsKey(uriType)) {
             throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        queryBuilder.setTables(URI_TABLE_MAP.get(uriType));
+        queryBuilder.setTables(URI_QUERY_TABLE_MAP.get(uriType));
 
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
         Cursor cursor = queryBuilder.query(database, projection, selection, selectionArgs, null, null, sortOrder);
@@ -93,10 +98,10 @@ public class NetballContentProvider extends ContentProvider {
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
 
         int uriType = URI_MATCHER.match(uri);
-        if (!URI_TABLE_MAP.containsKey(uriType)) {
+        if (!URI_WRITE_TABLE_MAP.containsKey(uriType)) {
             throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        long id = database.insert(URI_TABLE_MAP.get(uriType), null, values);
+        long id = database.insert(URI_WRITE_TABLE_MAP.get(uriType), null, values);
 
         getContext().getContentResolver().notifyChange(uri, null);
 
@@ -109,10 +114,10 @@ public class NetballContentProvider extends ContentProvider {
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
 
         int uriType = URI_MATCHER.match(uri);
-        if (!URI_TABLE_MAP.containsKey(uriType)) {
+        if (!URI_WRITE_TABLE_MAP.containsKey(uriType)) {
             throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        int count = database.delete(URI_TABLE_MAP.get(uriType), selection, selectionArgs);
+        int count = database.delete(URI_WRITE_TABLE_MAP.get(uriType), selection, selectionArgs);
 
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
@@ -123,10 +128,10 @@ public class NetballContentProvider extends ContentProvider {
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
 
         int uriType = URI_MATCHER.match(uri);
-        if (!URI_TABLE_MAP.containsKey(uriType)) {
+        if (!URI_WRITE_TABLE_MAP.containsKey(uriType)) {
             throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        int count = database.update(URI_TABLE_MAP.get(uriType), values, selection, selectionArgs);
+        int count = database.update(URI_WRITE_TABLE_MAP.get(uriType), values, selection, selectionArgs);
 
         getContext().getContentResolver().notifyChange(uri, null);
         return count;

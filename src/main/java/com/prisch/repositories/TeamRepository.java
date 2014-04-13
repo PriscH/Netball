@@ -1,15 +1,12 @@
 package com.prisch.repositories;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
+import android.content.*;
 import android.database.Cursor;
 import android.net.Uri;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Position;
 import com.prisch.model.Team;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class TeamRepository {
@@ -38,17 +35,9 @@ public class TeamRepository {
         return ContentUris.parseId(resultUri);
     }
 
-    public Map<Long, Position> getLatestTeam() {
-        Cursor cursor = context.getContentResolver().query(NetballContentProvider.URI_TEAMS, null, null, null, Team.COLUMN_GAME_ID);
-
-        Map<Long, Position> teamMap = new HashMap<Long, Position>();
-        while (cursor.moveToNext() && teamMap.size() < 7) {
-            long playerId = cursor.getLong(cursor.getColumnIndex(Team.COLUMN_PLAYER_ID));
-            Position position = Position.fromString(cursor.getString(cursor.getColumnIndex(Team.COLUMN_POSITION)));
-            teamMap.put(playerId, position);
-        }
-
-        return teamMap;
+    public Loader<Cursor> getActiveTeam() {
+        // TODO: This currently returns all teams and members, not only the active one
+        return new CursorLoader(context, NetballContentProvider.URI_TEAMS, null, null, null, null);
     }
 
 }

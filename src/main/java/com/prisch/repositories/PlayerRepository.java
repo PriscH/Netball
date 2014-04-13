@@ -1,15 +1,10 @@
 package com.prisch.repositories;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
+import android.content.*;
 import android.database.Cursor;
 import android.net.Uri;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Player;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PlayerRepository {
 
@@ -46,16 +41,7 @@ public class PlayerRepository {
         context.getContentResolver().update(NetballContentProvider.URI_PLAYERS, contentValues, where, parameters);
     }
 
-    public Map<Long, String> getPlayers() {
-        Cursor cursor = context.getContentResolver().query(NetballContentProvider.URI_PLAYERS, null, null, null, null);
-
-        Map<Long, String> playerMap = new HashMap<Long, String>();
-        while (cursor.moveToNext()) {
-            long playerId = cursor.getLong(cursor.getColumnIndex(Player.COLUMN_ID));
-            String name = cursor.getString(cursor.getColumnIndex(Player.COLUMN_NAME));
-            playerMap.put(playerId, name);
-        }
-
-        return playerMap;
+    public Loader<Cursor> getAllPlayers() {
+        return new CursorLoader(context, NetballContentProvider.URI_PLAYERS, null, null, null, Player.COLUMN_NAME);
     }
 }
