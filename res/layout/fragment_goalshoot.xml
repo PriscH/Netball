@@ -19,10 +19,10 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GOALED"
+                android:text="GOAL"
                 android:id="@+id/textView" android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="8dp" android:clickable="false"
-                android:password="false"/>
+                android:password="false" android:textColor="@android:color/primary_text_dark"/>
     </FrameLayout>
     <FrameLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="1"
             >
@@ -31,7 +31,7 @@
                      android:adjustViewBounds="false" android:paddingBottom="30dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MISSED GOAL"
                   android:id="@+id/textView1" android:layout_gravity="center_horizontal|bottom"
-                  android:layout_marginBottom="8dp"/>
+                  android:layout_marginBottom="8dp" android:textColor="@android:color/primary_text_dark"/>
     </FrameLayout>
     <FrameLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="1"
             >
@@ -40,6 +40,7 @@
                      android:adjustViewBounds="false" android:paddingBottom="30dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="REBOUND"
                   android:id="@+id/textView2" android:layout_gravity="center_horizontal|bottom"
-                  android:layout_marginBottom="8dp" android:singleLine="false"/>
+                  android:layout_marginBottom="8dp" android:singleLine="false"
+                  android:textColor="@android:color/primary_text_dark"/>
     </FrameLayout>
 </LinearLayout>
