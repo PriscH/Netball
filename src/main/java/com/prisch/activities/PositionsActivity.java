@@ -16,10 +16,23 @@ import com.prisch.model.Position;
 import com.prisch.model.Team;
 import com.prisch.repositories.TeamRepository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PositionsActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int TEAM_LOADER = 0;
-    private static final String BUTTON_FORMAT_PATTERN = "%s<br/><small><small><small>%s</small></small></small>";
+
+    private static final Map<Position, Integer> POSITION_BUTTON_MAP = new HashMap<Position, Integer>();
+    static {
+        POSITION_BUTTON_MAP.put(Position.GS, R.id.button_goalShoot);
+        POSITION_BUTTON_MAP.put(Position.GA, R.id.button_goalAttack);
+        POSITION_BUTTON_MAP.put(Position.WA, R.id.button_wingAttack);
+        POSITION_BUTTON_MAP.put(Position.C, R.id.button_center);
+        POSITION_BUTTON_MAP.put(Position.WD, R.id.button_wingDefense);
+        POSITION_BUTTON_MAP.put(Position.GD, R.id.button_goalDefense);
+        POSITION_BUTTON_MAP.put(Position.GK, R.id.button_goalKeeper);
+    }
 
     private TeamRepository teamRepository;
 
@@ -33,8 +46,6 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
         teamRepository = new TeamRepository(this);
 
         getLoaderManager().initLoader(TEAM_LOADER, null, this);
-
-        configureButtons();
     }
 
     @Override
@@ -51,39 +62,9 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         while (data.moveToNext()) {
-            String name = data.getString(data.getColumnIndex(Player.COLUMN_NAME));
-            Position position = Position.fromString(data.getString(data.getColumnIndex(Team.COLUMN_POSITION)));
-
-            switch (position) {
-                case GS:
-                    Button buttonGS = (Button)findViewById(R.id.button_goalShoot);
-                    buttonGS.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GS", name)));
-                    break;
-                case GA:
-                    Button buttonGA = (Button)findViewById(R.id.button_goalAttack);
-                    buttonGA.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GA", name)));
-                    break;
-                case WA:
-                    Button buttonWA = (Button)findViewById(R.id.button_wingAttack);
-                    buttonWA.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "WA", name)));
-                    break;
-                case C:
-                    Button buttonC = (Button)findViewById(R.id.button_center);
-                    buttonC.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "C", name)));
-                    break;
-                case WD:
-                    Button buttonWD = (Button)findViewById(R.id.button_wingDefense);
-                    buttonWD.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "WD", name)));
-                    break;
-                case GD:
-                    Button buttonGD = (Button)findViewById(R.id.button_goalDefense);
-                    buttonGD.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GD", name)));
-                    break;
-                case GK:
-                    Button buttonGK = (Button)findViewById(R.id.button_goalKeeper);
-                    buttonGK.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GK", name)));
-                    break;
-            }
+            Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.COLUMN_POSITION)));
+            String playerName = data.getString(data.getColumnIndex(Player.COLUMN_NAME));
+            configureButton(position, playerName);
         }
     }
 
@@ -94,70 +75,12 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     // ===== Helper Methods =====
 
-    private void configureButtons() {
-        Button buttonGS = (Button)findViewById(R.id.button_goalShoot);
-        buttonGS.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GS", "Goal Shoot")));
-        buttonGS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
-                startActivity(actionsIntent);
-            }
-        });
+    private void configureButton(Position position, String playerName) {
+        final String BUTTON_FORMAT_PATTERN = "%s<br/><small><small><small>%s</small></small></small>";
 
-        Button buttonGA = (Button)findViewById(R.id.button_goalAttack);
-        buttonGA.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GA", "Goal Attack")));
-        buttonGA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
-                startActivity(actionsIntent);
-            }
-        });
-
-        Button buttonWA = (Button)findViewById(R.id.button_wingAttack);
-        buttonWA.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "WA", "Wing Attack")));
-        buttonWA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
-                startActivity(actionsIntent);
-            }
-        });
-
-        Button buttonC = (Button)findViewById(R.id.button_center);
-        buttonC.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "C", "Center")));
-        buttonC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
-                startActivity(actionsIntent);
-            }
-        });
-
-        Button buttonWD = (Button)findViewById(R.id.button_wingDefense);
-        buttonWD.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "WD", "Wing Defense")));
-        buttonWD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
-                startActivity(actionsIntent);
-            }
-        });
-
-        Button buttonGD = (Button)findViewById(R.id.button_goalDefense);
-        buttonGD.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GD", "Goal Defense")));
-        buttonGD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
-                startActivity(actionsIntent);
-            }
-        });
-
-        Button buttonGK = (Button)findViewById(R.id.button_goalKeeper);
-        buttonGK.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, "GK", "Goal Keeper")));
-        buttonGK.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button)findViewById(POSITION_BUTTON_MAP.get(position));
+        button.setText(Html.fromHtml(String.format(BUTTON_FORMAT_PATTERN, position.getAcronym(), playerName)));
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);

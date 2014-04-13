@@ -28,6 +28,34 @@ public class NetballContentProvider extends ContentProvider {
     private static final String PATH_GAMES = "games";
     private static final String PATH_TEAMS = "teams";
 
+    private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+    static {
+        URI_MATCHER.addURI(AUTHORITY, PATH_PLAYERS, CODE_PLAYERS);
+        URI_MATCHER.addURI(AUTHORITY, PATH_GAMES, CODE_GAMES);
+        URI_MATCHER.addURI(AUTHORITY, PATH_TEAMS, CODE_TEAMS);
+    }
+
+    private static final Map<Integer, String> URI_QUERY_TABLE_MAP = new HashMap<Integer, String>();
+    static {
+        URI_QUERY_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
+        URI_QUERY_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
+        URI_QUERY_TABLE_MAP.put(CODE_TEAMS, Team.TABLE_JOIN_PLAYERS);
+    }
+
+    private static final Map<Integer, String> URI_WRITE_TABLE_MAP = new HashMap<Integer, String>();
+    static {
+        URI_WRITE_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
+        URI_WRITE_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
+        URI_WRITE_TABLE_MAP.put(CODE_TEAMS, Team.TABLE);
+    }
+
+    private static final Map<Integer, String> URI_PATH_MAP = new HashMap<Integer, String>();
+    static {
+        URI_PATH_MAP.put(CODE_PLAYERS, PATH_PLAYERS);
+        URI_PATH_MAP.put(CODE_GAMES, PATH_GAMES);
+        URI_PATH_MAP.put(CODE_TEAMS, PATH_TEAMS);
+    }
+
     // ===== Exposed Constants =====
 
     public static final Uri URI_PLAYERS = Uri.parse("content://" + AUTHORITY + "/" + PATH_PLAYERS);
@@ -36,32 +64,7 @@ public class NetballContentProvider extends ContentProvider {
 
     // ===== Fields =====
 
-    private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-    private static final Map<Integer, String> URI_QUERY_TABLE_MAP = new HashMap<Integer, String>();
-    private static final Map<Integer, String> URI_WRITE_TABLE_MAP = new HashMap<Integer, String>();
-    private static final Map<Integer, String> URI_PATH_MAP = new HashMap<Integer, String>();
-
     private DatabaseHelper databaseHelper;
-
-    // ===== Static Initialization =====
-
-    static {
-        URI_MATCHER.addURI(AUTHORITY, PATH_PLAYERS, CODE_PLAYERS);
-        URI_MATCHER.addURI(AUTHORITY, PATH_GAMES, CODE_GAMES);
-        URI_MATCHER.addURI(AUTHORITY, PATH_TEAMS, CODE_TEAMS);
-
-        URI_QUERY_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
-        URI_QUERY_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
-        URI_QUERY_TABLE_MAP.put(CODE_TEAMS, Team.TABLE_JOIN_PLAYERS);
-
-        URI_WRITE_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
-        URI_WRITE_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
-        URI_WRITE_TABLE_MAP.put(CODE_TEAMS, Team.TABLE);
-
-        URI_PATH_MAP.put(CODE_PLAYERS, PATH_PLAYERS);
-        URI_PATH_MAP.put(CODE_GAMES, PATH_GAMES);
-        URI_PATH_MAP.put(CODE_TEAMS, PATH_TEAMS);
-    }
 
     // ===== Inherited Operations =====
 
