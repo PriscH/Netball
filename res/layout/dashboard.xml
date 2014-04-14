@@ -9,15 +9,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Record Game"
-            android:id="@+id/button_recordGame" android:layout_gravity="center"/>
+            android:id="@+id/button_recordGame" android:layout_gravity="center" android:paddingTop="20dp"
+            android:paddingBottom="20dp" android:textSize="30sp"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Manage Players"
-            android:id="@+id/button_managePlayers"/>
+            android:id="@+id/button_managePlayers" android:paddingTop="20dp" android:paddingBottom="20dp"
+            android:textSize="30sp"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="View Statistics"
-            android:id="@+id/button_viewStatistics"/>
+            android:id="@+id/button_viewStatistics" android:paddingTop="20dp" android:paddingBottom="20dp"
+            android:textSize="30sp"/>
 </LinearLayout>

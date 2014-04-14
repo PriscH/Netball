@@ -33,7 +33,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
 
         playerRepository = new PlayerRepository(this);
 
-        adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, null, new String[] {Player.COLUMN_NAME}, new int[] {android.R.id.text1}, 0);
+        adapter = new SimpleCursorAdapter(this, R.layout.list_players, null, new String[] {Player.COLUMN_NAME}, new int[] {R.id.playerName}, 0);
 
         ListView listView = (ListView)findViewById(R.id.playersListView);
         listView.setAdapter(adapter);
