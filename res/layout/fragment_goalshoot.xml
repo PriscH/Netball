@@ -13,9 +13,9 @@
         <ImageButton
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/button_goaled" android:src="@drawable/action_goal" android:scaleType="fitCenter"
+                android:id="@+id/button_goal" android:src="@drawable/action_goal" android:scaleType="fitCenter"
                 android:adjustViewBounds="false" android:paddingBottom="30dp"
-                />
+                android:cropToPadding="false"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

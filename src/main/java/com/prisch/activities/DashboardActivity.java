@@ -34,6 +34,7 @@ public class DashboardActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent teamIntent = new Intent(getApplicationContext(), TeamActivity.class);
+                teamIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(teamIntent);
             }
         });
