@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 import com.prisch.R;
 import com.prisch.model.Player;
@@ -87,7 +88,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
     private void showAddPlayerDialog() {
         final EditText nameInput = new EditText(this);
 
-        new AlertDialog.Builder(this)
+        final Dialog dialog = new AlertDialog.Builder(this)
             .setTitle("Add new player")
             .setMessage("Enter the player's name")
             .setView(nameInput)
@@ -102,7 +103,18 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
                 public void onClick(DialogInterface dialog, int which) {
                     // Do Nothing
                 }
-            }).show();
+            }).create();
+
+        nameInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     private void showRenamePlayerDialog(final int position) {
@@ -110,7 +122,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
         Cursor cursor = (Cursor)adapter.getItem(position);
         nameInput.append(cursor.getString(cursor.getColumnIndex(Player.COLUMN_NAME)));
 
-        new AlertDialog.Builder(this)
+        final Dialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Rename player")
                 .setMessage("Enter the player's name")
                 .setView(nameInput)
@@ -126,7 +138,18 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
                     public void onClick(DialogInterface dialog, int which) {
                         // Do Nothing
                     }
-                }).show();
+                }).create();
+
+        nameInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     private void showModifyPlayerDialog(final int position) {
