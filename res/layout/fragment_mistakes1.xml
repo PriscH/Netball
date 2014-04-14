@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="STEPPING"
-                android:id="@+id/textView" android:layout_gravity="center_horizontal|bottom"
+                android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="8dp" android:clickable="false"
                 android:password="false" android:singleLine="false"
                 android:textColor="@android:color/primary_text_dark"/>
@@ -31,7 +31,7 @@
                      android:id="@+id/button_offside" android:src="@drawable/action_offside" android:scaleType="fitCenter"
                      android:adjustViewBounds="false" android:paddingBottom="30dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OFFSIDE"
-                  android:id="@+id/textView1" android:layout_gravity="center_horizontal|bottom"
+                  android:layout_gravity="center_horizontal|bottom"
                   android:layout_marginBottom="8dp" android:textColor="@android:color/primary_text_dark"/>
     </FrameLayout>
     <FrameLayout android:layout_width="0dp" android:layout_height="fill_parent" android:layout_weight="1"
@@ -40,7 +40,7 @@
                      android:id="@+id/button_holding" android:src="@drawable/action_holding" android:scaleType="fitCenter"
                      android:adjustViewBounds="false" android:paddingBottom="30dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="HOLDING"
-                  android:id="@+id/textView2" android:layout_gravity="center_horizontal|bottom"
+                  android:layout_gravity="center_horizontal|bottom"
                   android:layout_marginBottom="8dp" android:singleLine="false"
                   android:textColor="@android:color/primary_text_dark"/>
     </FrameLayout>

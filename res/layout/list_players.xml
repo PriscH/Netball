@@ -9,13 +9,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/playerName" android:layout_alignParentLeft="true" android:textSize="20sp"
+            android:id="@+id/text_playerName" android:layout_alignParentLeft="true" android:textSize="20sp"
             android:textColor="@android:color/primary_text_dark"
             />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/playerPosition" android:layout_alignParentLeft="false"
+            android:id="@+id/text_playerPosition" android:layout_alignParentLeft="false"
             android:layout_alignParentRight="true" android:textColor="@android:color/holo_blue_bright"
             android:textStyle="bold" android:textSize="20sp"/>
 </RelativeLayout>
