@@ -36,8 +36,7 @@ public class TeamRepository {
     }
 
     public Loader<Cursor> getActiveTeam() {
-        // TODO: This currently returns all teams and members, not only the active one
-        return new CursorLoader(context, NetballContentProvider.URI_TEAMS, null, null, null, null);
+        return new CursorLoader(context, NetballContentProvider.URI_ACTIVE_TEAM, null, null, null, null);
     }
 
 }

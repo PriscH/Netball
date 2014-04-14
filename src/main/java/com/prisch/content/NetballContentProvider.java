@@ -23,16 +23,19 @@ public class NetballContentProvider extends ContentProvider {
     private static final int CODE_PLAYERS = 1;
     private static final int CODE_GAMES = 2;
     private static final int CODE_TEAMS = 3;
+    private static final int CODE_ACTIVE_TEAM = 301;
 
     private static final String PATH_PLAYERS = "players";
     private static final String PATH_GAMES = "games";
     private static final String PATH_TEAMS = "teams";
+    private static final String PATH_ACTIVE_TEAM = PATH_TEAMS + "/active";
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
     static {
         URI_MATCHER.addURI(AUTHORITY, PATH_PLAYERS, CODE_PLAYERS);
         URI_MATCHER.addURI(AUTHORITY, PATH_GAMES, CODE_GAMES);
         URI_MATCHER.addURI(AUTHORITY, PATH_TEAMS, CODE_TEAMS);
+        URI_MATCHER.addURI(AUTHORITY, PATH_ACTIVE_TEAM, CODE_ACTIVE_TEAM);
     }
 
     private static final Map<Integer, String> URI_QUERY_TABLE_MAP = new HashMap<Integer, String>();
@@ -61,6 +64,7 @@ public class NetballContentProvider extends ContentProvider {
     public static final Uri URI_PLAYERS = Uri.parse("content://" + AUTHORITY + "/" + PATH_PLAYERS);
     public static final Uri URI_GAMES = Uri.parse("content://" + AUTHORITY + "/" + PATH_GAMES);
     public static final Uri URI_TEAMS = Uri.parse("content://" + AUTHORITY + "/" + PATH_TEAMS);
+    public static final Uri URI_ACTIVE_TEAM = Uri.parse("content://" + AUTHORITY + "/" + PATH_ACTIVE_TEAM);
 
     // ===== Fields =====
 
@@ -78,14 +82,22 @@ public class NetballContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
+        Cursor cursor;
         int uriType = URI_MATCHER.match(uri);
-        if (!URI_QUERY_TABLE_MAP.containsKey(uriType)) {
-            throw new IllegalArgumentException("Unknown URI: " + uri);
-        }
-        queryBuilder.setTables(URI_QUERY_TABLE_MAP.get(uriType));
+        switch (uriType) {
+            case CODE_ACTIVE_TEAM:
+                cursor = getActiveTeam();
+                break;
+            default:
+                if (!URI_QUERY_TABLE_MAP.containsKey(uriType)) {
+                    throw new IllegalArgumentException("Unknown URI: " + uri);
+                }
+                queryBuilder.setTables(URI_QUERY_TABLE_MAP.get(uriType));
 
-        SQLiteDatabase database = databaseHelper.getWritableDatabase();
-        Cursor cursor = queryBuilder.query(database, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = queryBuilder.query(databaseHelper.getWritableDatabase(), projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+        }
+
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
@@ -138,5 +150,16 @@ public class NetballContentProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
+    }
+
+    // ===== Query Operations =====
+
+    private Cursor getActiveTeam() {
+        final String QUERY = "SELECT * FROM " + Team.TABLE_JOIN_PLAYERS
+                             + " WHERE " + Team.COLUMN_GAME_ID + " IN "
+                             + "(SELECT " + Game.COLUMN_ID + " FROM " + Game.TABLE
+                               + " WHERE " + Game.COLUMN_ACTIVE + " = 1)";
+
+        return databaseHelper.getWritableDatabase().rawQuery(QUERY, null);
     }
 }

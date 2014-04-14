@@ -11,6 +11,28 @@
             android:text="Record Game"
             android:id="@+id/button_recordGame" android:layout_gravity="center" android:paddingTop="20dp"
             android:paddingBottom="20dp" android:textSize="30sp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue Recording"
+        android:id="@+id/button_continueRecording"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="30sp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Recording"
+        android:id="@+id/button_stopRecording"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="30sp"
+        android:singleLine="false"/>
+
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
