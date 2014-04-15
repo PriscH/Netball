@@ -103,18 +103,14 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     }
 
     private void togglePlayerPosition(long playerId, TextView positionView) {
-        Position previousPosition = teamMap.remove(playerId);
-
-        if (outstandingPositions.isEmpty()) {
+        if (teamMap.containsKey(playerId)) {
+            Position previousPosition = teamMap.remove(playerId);
+            outstandingPositions.add(0, previousPosition);
             positionView.setText("");
         } else {
-            Position position = outstandingPositions.remove(0);
-            teamMap.put(playerId, position);
-            positionView.setText(position.toString());
-        }
-
-        if (previousPosition != null) {
-            outstandingPositions.add(0, previousPosition);
+            Position currentPosition = outstandingPositions.remove(0);
+            teamMap.put(playerId, currentPosition);
+            positionView.setText(currentPosition.getAcronym());
         }
 
         updateActionBar();
