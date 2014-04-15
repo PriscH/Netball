@@ -1,12 +1,14 @@
 package com.prisch.activities;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageButton;
 import com.prisch.R;
-import com.prisch.fragments.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ActionsActivity extends Activity {
 
@@ -17,7 +19,7 @@ public class ActionsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.actions);
-        addActionFragments();
+        setupButtons();
     }
 
     @Override
@@ -28,24 +30,30 @@ public class ActionsActivity extends Activity {
 
     // ===== Helper Methods =====
 
-    private void addActionFragments() {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    private void setupButtons() {
+        List<ImageButton> buttons = new LinkedList<ImageButton>();
+        buttons.add((ImageButton)findViewById(R.id.button_goal));
+        buttons.add((ImageButton)findViewById(R.id.button_miss));
+        buttons.add((ImageButton)findViewById(R.id.button_rebound));
+        buttons.add((ImageButton)findViewById(R.id.button_stepping));
+        buttons.add((ImageButton)findViewById(R.id.button_offside));
+        buttons.add((ImageButton)findViewById(R.id.button_holding));
+        buttons.add((ImageButton)findViewById(R.id.button_contact));
+        buttons.add((ImageButton)findViewById(R.id.button_obstruction));
+        buttons.add((ImageButton)findViewById(R.id.button_handling));
+        buttons.add((ImageButton)findViewById(R.id.button_badPass));
+        buttons.add((ImageButton)findViewById(R.id.button_badCatch));
+        buttons.add((ImageButton)findViewById(R.id.button_breaking));
+        buttons.add((ImageButton)findViewById(R.id.button_interception));
+        buttons.add((ImageButton)findViewById(R.id.button_pressure));
 
-        Fragment goalShootFragment = new GoalShootFragment();
-        fragmentTransaction.add(R.id.layout_actions, goalShootFragment);
-
-        Fragment mistakes1Fragment = new Mistakes1Fragment();
-        fragmentTransaction.add(R.id.layout_actions, mistakes1Fragment);
-
-        Fragment mistakes2Fragment = new Mistakes2Fragment();
-        fragmentTransaction.add(R.id.layout_actions, mistakes2Fragment);
-
-        Fragment misplaysFragment = new MisplaysFragment();
-        fragmentTransaction.add(R.id.layout_actions, misplaysFragment);
-
-        Fragment goodPlaysFragment = new GoodPlaysFragment();
-        fragmentTransaction.add(R.id.layout_actions, goodPlaysFragment);
-
-        fragmentTransaction.commit();
+        for (ImageButton button : buttons) {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
     }
 }
