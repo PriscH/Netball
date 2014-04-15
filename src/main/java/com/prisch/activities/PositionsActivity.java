@@ -75,7 +75,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     // ===== Helper Methods =====
 
-    private void configureButton(Position position, String playerName) {
+    private void configureButton(final Position position, String playerName) {
         final String BUTTON_FORMAT_PATTERN = "%s<br/><small><small><small>%s</small></small></small>";
 
         Button button = (Button)findViewById(POSITION_BUTTON_MAP.get(position));
@@ -84,6 +84,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
             @Override
             public void onClick(View view) {
                 Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
+                actionsIntent.putExtra(ActionsActivity.POSITION_KEY, position);
                 startActivity(actionsIntent);
             }
         });
