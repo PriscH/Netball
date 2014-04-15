@@ -34,10 +34,19 @@ public class ActionsActivity extends Activity {
     // ===== Helper Methods =====
 
     private void setupButtons() {
+        // TODO: Figure out why the disabled state isn't correctly inherited
         View goalButton = findViewById(R.id.custombutton_goal);
+        ImageButton goalImageButton = (ImageButton)findViewById(R.id.button_goal);
+
         View missedButton = findViewById(R.id.custombutton_miss);
+        ImageButton missedImageButton = (ImageButton)findViewById(R.id.button_miss);
+
         View reboundButton = findViewById(R.id.custombutton_rebound);
+        ImageButton reboundImageButton = (ImageButton)findViewById(R.id.button_rebound);
+
         View breakingButton = findViewById(R.id.custombutton_breaking);
+        ImageButton breakingImageButton = (ImageButton)findViewById(R.id.button_breaking);
+
 
         Position position = (Position)getIntent().getExtras().get(POSITION_KEY);
         if (position != null) {
@@ -45,12 +54,19 @@ public class ActionsActivity extends Activity {
                 case GK:
                     goalButton.setEnabled(false);
                     missedButton.setEnabled(false);
+
+                    goalImageButton.setEnabled(false);
+                    missedImageButton.setEnabled(false);
+
                     // Fall through
                 case GS:
                     breakingButton.setEnabled(false);
+                    breakingImageButton.setEnabled(false);
+
                     break;
                 case C:
                     breakingButton.setEnabled(false);
+                    breakingImageButton.setEnabled(false);
                     // Fall through
                 case WA:
                     // Fall through
@@ -58,6 +74,11 @@ public class ActionsActivity extends Activity {
                     goalButton.setEnabled(false);
                     missedButton.setEnabled(false);
                     reboundButton.setEnabled(false);
+
+                    goalImageButton.setEnabled(false);
+                    missedImageButton.setEnabled(false);
+                    reboundImageButton.setEnabled(false);
+
                     break;
                 case GA:
                     // Fall through
