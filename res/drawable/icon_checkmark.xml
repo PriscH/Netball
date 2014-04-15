@@ -5,7 +5,7 @@
     <item android:state_enabled="false"
           android:drawable="@drawable/checkmark_disabled"/>
     <item android:state_pressed="true"
-          android:drawable="@drawable/checkmark_disabled"/>
+          android:drawable="@drawable/checkmark_pressed"/>
     <item android:drawable="@drawable/checkmark"/>
 
 </selector>

@@ -3,26 +3,33 @@
 <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingBottom="2dp">
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select Position"
             android:id="@+id/text_selectPosition" android:textColor="@android:color/primary_text_dark"
             android:layout_alignParentLeft="true" android:layout_centerVertical="true" android:textSize="18sp"
-        />
+            android:paddingLeft="10dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/custombutton_selectDone"
         android:gravity="center_vertical"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:paddingRight="10dp"
+        android:background="@drawable/actionbar_custombutton_background">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:background="@color/button_pressed_color"
+            android:layout_marginRight="5dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,11 +44,10 @@
             android:text="DONE"
             android:layout_alignParentRight="true"
             android:textStyle="bold"
-            android:textColor="@color/actionbar_custombutton_text"
             android:textSize="14sp"
             android:layout_centerVertical="true"
             android:duplicateParentState="true"
-            />
+            android:textColor="@android:color/primary_text_dark"/>
     </LinearLayout>
 
 </RelativeLayout>
