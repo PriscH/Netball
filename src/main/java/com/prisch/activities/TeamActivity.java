@@ -66,8 +66,8 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
         getActionBar().setCustomView(R.layout.actionbar_selectteam);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        Button acceptButton = (Button)getActionBar().getCustomView().findViewById(R.id.button_teamAccept);
-        acceptButton.setOnClickListener(new View.OnClickListener() {
+        View doneButton = findViewById(R.id.custombutton_selectDone);
+        doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 acceptTeam();
@@ -123,8 +123,9 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     // ===== Helper Methods =====
 
     private void updateActionBar() {
-        TextView instructionText = (TextView)getActionBar().getCustomView().findViewById(R.id.text_selectPosition);
-        Button acceptButton = (Button)getActionBar().getCustomView().findViewById(R.id.button_teamAccept);
+        TextView instructionText = (TextView)findViewById(R.id.text_selectPosition);
+        View acceptButton = findViewById(R.id.custombutton_selectDone);
+
         if (outstandingPositions.isEmpty()) {
             instructionText.setText("");
             acceptButton.setEnabled(true);

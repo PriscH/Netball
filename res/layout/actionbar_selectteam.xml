@@ -2,18 +2,46 @@
 
 <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
-        android:paddingLeft="10dp" android:paddingRight="5dp">
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/text_selectPosition" android:textColor="@android:color/white"
-            android:layout_alignParentLeft="true" android:layout_centerVertical="true" android:textSize="18sp"/>
-    <Button
+            android:text="Select Position"
+            android:id="@+id/text_selectPosition" android:textColor="@android:color/primary_text_dark"
+            android:layout_alignParentLeft="true" android:layout_centerVertical="true" android:textSize="18sp"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/custombutton_selectDone"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Accept"
-            android:id="@+id/button_teamAccept" android:layout_alignParentRight="true" android:minHeight="0dp"
-            android:minWidth="0dp" android:textSize="18sp" android:layout_centerVertical="true" android:enabled="false"/>
+            android:src="@drawable/icon_checkmark"
+            android:duplicateParentState="true"
+            android:focusableInTouchMode="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONE"
+            android:layout_alignParentRight="true"
+            android:textStyle="bold"
+            android:textColor="@color/actionbar_custombutton_text"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:duplicateParentState="true"
+            />
+    </LinearLayout>
+
 </RelativeLayout>
