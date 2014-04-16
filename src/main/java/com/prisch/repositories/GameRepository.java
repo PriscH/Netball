@@ -18,10 +18,11 @@ public class GameRepository {
 
     // ===== Interface =====
 
-    public long createGame(Date date) {
+    public long createGame(Date date, String name, boolean active) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Game.COLUMN_DATE, date.getTime());
-        contentValues.put(Game.COLUMN_ACTIVE, true);
+        contentValues.put(Game.COLUMN_NAME, name);
+        contentValues.put(Game.COLUMN_ACTIVE, active);
 
         Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_GAMES, contentValues);
         return ContentUris.parseId(resultUri);

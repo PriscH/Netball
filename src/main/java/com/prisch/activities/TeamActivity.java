@@ -1,13 +1,13 @@
 package com.prisch.activities;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.LoaderManager;
+import android.app.*;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 import com.prisch.R;
 import com.prisch.model.Player;
@@ -70,7 +70,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptTeam();
+                showTeamNameDialog();
             }
         });
 
@@ -94,8 +94,40 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
 
     // ===== Event Handlers =====
 
-    private void acceptTeam() {
-        long gameId = gameRepository.createGame(new Date());
+    private void showTeamNameDialog() {
+        final EditText nameInput = new EditText(this);
+
+        final Dialog dialog = new AlertDialog.Builder(this)
+            .setTitle("Record Game")
+            .setMessage("Enter a name for the game")
+            .setView(nameInput)
+            .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    acceptTeam(nameInput.getText().toString());
+                }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do Nothing
+                }
+            }).create();
+
+        nameInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void acceptTeam(String name) {
+        long gameId = gameRepository.createGame(new Date(), name, true);
         teamRepository.createTeam(gameId, teamMap);
 
         Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
@@ -107,7 +139,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
             Position previousPosition = teamMap.remove(playerId);
             outstandingPositions.add(0, previousPosition);
             positionView.setText("");
-        } else if (!outstandingPositions.isEmpty()) {
+        } else {
             Position currentPosition = outstandingPositions.remove(0);
             teamMap.put(playerId, currentPosition);
             positionView.setText(currentPosition.getAcronym());
