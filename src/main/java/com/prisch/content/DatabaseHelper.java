@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.prisch.model.Game;
 import com.prisch.model.Player;
+import com.prisch.model.Record;
 import com.prisch.model.Team;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -20,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Player.onCreate(db);
         Game.onCreate(db);
         Team.onCreate(db);
+        Record.onCreate(db);
     }
 
     @Override
@@ -27,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Player.onUpgrade(db, oldVersion, newVersion);
         Game.onUpgrade(db, oldVersion, newVersion);
         Team.onUpgrade(db, oldVersion, newVersion);
+        Record.onUpgrade(db, oldVersion, newVersion);
     }
 
     // ===== Constants =====

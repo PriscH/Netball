@@ -36,6 +36,9 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     private TeamRepository teamRepository;
 
+    // Map from a Position to the Team assignment ID (Player and Position) currently assigned to that Position
+    private Map<Position, Long> positionMap = new HashMap<Position, Long>(7);
+
     // ===== Lifecycle Methods =====
 
     @Override
@@ -61,10 +64,12 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        positionMap.clear();
         while (data.moveToNext()) {
             Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.COLUMN_POSITION)));
+            Long teamAssignmentId = data.getLong(data.getColumnIndex(Team.COLUMN_ID));
             String playerName = data.getString(data.getColumnIndex(Player.COLUMN_NAME));
-            configureButton(position, playerName);
+            configureButton(position, teamAssignmentId, playerName);
         }
     }
 
@@ -75,7 +80,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     // ===== Helper Methods =====
 
-    private void configureButton(final Position position, String playerName) {
+    private void configureButton(final Position position, final Long teamAssignmentId, String playerName) {
         final String BUTTON_FORMAT_PATTERN = "%s<br/><small><small><small>%s</small></small></small>";
 
         Button button = (Button)findViewById(POSITION_BUTTON_MAP.get(position));
@@ -85,6 +90,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
             public void onClick(View view) {
                 Intent actionsIntent = new Intent(getApplicationContext(), ActionsActivity.class);
                 actionsIntent.putExtra(ActionsActivity.POSITION_KEY, position);
+                actionsIntent.putExtra(ActionsActivity.TEAM_ID_KEY, teamAssignmentId);
                 startActivity(actionsIntent);
             }
         });

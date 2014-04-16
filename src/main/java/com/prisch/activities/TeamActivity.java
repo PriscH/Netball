@@ -28,7 +28,9 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
 
     private CursorAdapter adapter;
 
+    // List of Positions that have not yet been assigned
     private List<Position> outstandingPositions = new LinkedList<Position>();
+    // Map from a Player's ID to the Position currently assigned to that Player
     private Map<Long, Position> teamMap = new HashMap<Long, Position>(7);
 
     // ===== Constructor =====

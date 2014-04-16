@@ -2,27 +2,58 @@ package com.prisch.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import com.prisch.R;
+import com.prisch.model.Action;
 import com.prisch.model.Position;
+import com.prisch.repositories.RecordRepository;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionsActivity extends Activity {
 
     public static final String POSITION_KEY = "POSITION_KEY";
+    public static final String TEAM_ID_KEY = "TEAM_ID";
+
+    // Maps action button IDs to their corresponding Action values
+    public static final Map<Integer, Action> ACTION_BUTTON_MAP = new HashMap<Integer, Action>(Action.values().length);
+    static {
+        ACTION_BUTTON_MAP.put(R.id.button_goal,         Action.GOAL);
+        ACTION_BUTTON_MAP.put(R.id.button_miss,         Action.MISSED);
+        ACTION_BUTTON_MAP.put(R.id.button_rebound,      Action.REBOUND);
+        ACTION_BUTTON_MAP.put(R.id.button_stepping,     Action.STEPPING);
+        ACTION_BUTTON_MAP.put(R.id.button_offside,      Action.OFFSIDE);
+        ACTION_BUTTON_MAP.put(R.id.button_holding,      Action.HOLDING);
+        ACTION_BUTTON_MAP.put(R.id.button_contact,      Action.CONTACT);
+        ACTION_BUTTON_MAP.put(R.id.button_obstruction,  Action.OBSTRUCTION);
+        ACTION_BUTTON_MAP.put(R.id.button_handling,     Action.HANDLING);
+        ACTION_BUTTON_MAP.put(R.id.button_badPass,      Action.BADPASS);
+        ACTION_BUTTON_MAP.put(R.id.button_badCatch,     Action.BADCATCH);
+        ACTION_BUTTON_MAP.put(R.id.button_breaking,     Action.BREAKING);
+        ACTION_BUTTON_MAP.put(R.id.button_interception, Action.INTERCEPTION);
+        ACTION_BUTTON_MAP.put(R.id.button_pressure,     Action.PRESSURE);
+    }
+
+    private RecordRepository recordRepository;
+    private Handler handler;
 
     // ===== Lifecycle Methods =====
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.actions);
-        setupButtons();
+
+        recordRepository = new RecordRepository(this);
+        handler = new Handler();
+
+        disableIrrelevantButtons();
+        setupButtonListeners();
     }
 
     @Override
@@ -33,7 +64,7 @@ public class ActionsActivity extends Activity {
 
     // ===== Helper Methods =====
 
-    private void setupButtons() {
+    private void disableIrrelevantButtons() {
         // TODO: Figure out why the disabled state isn't correctly inherited
         View goalButton = findViewById(R.id.custombutton_goal);
         ImageButton goalImageButton = (ImageButton)findViewById(R.id.button_goal);
@@ -86,30 +117,28 @@ public class ActionsActivity extends Activity {
                     break;
             }
         }
+    }
 
-        List<ImageButton> buttons = new LinkedList<ImageButton>();
-        buttons.add((ImageButton)findViewById(R.id.button_goal));
-        buttons.add((ImageButton)findViewById(R.id.button_miss));
-        buttons.add((ImageButton)findViewById(R.id.button_rebound));
-        buttons.add((ImageButton)findViewById(R.id.button_stepping));
-        buttons.add((ImageButton)findViewById(R.id.button_offside));
-        buttons.add((ImageButton)findViewById(R.id.button_holding));
-        buttons.add((ImageButton)findViewById(R.id.button_contact));
-        buttons.add((ImageButton)findViewById(R.id.button_obstruction));
-        buttons.add((ImageButton)findViewById(R.id.button_handling));
-        buttons.add((ImageButton)findViewById(R.id.button_badPass));
-        buttons.add((ImageButton)findViewById(R.id.button_badCatch));
-        buttons.add((ImageButton)findViewById(R.id.button_breaking));
-        buttons.add((ImageButton)findViewById(R.id.button_interception));
-        buttons.add((ImageButton)findViewById(R.id.button_pressure));
+    private void setupButtonListeners() {
+        for (Integer buttonId : ACTION_BUTTON_MAP.keySet()) {
+            final Long teamAssignmentId = getIntent().getExtras().getLong(TEAM_ID_KEY);
+            final Action action = ACTION_BUTTON_MAP.get(buttonId);
 
-        for (ImageButton button : buttons) {
+            ImageButton button = (ImageButton)findViewById(buttonId);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // Perform the insertion asynchronously to ensure the interface is responsive
+                    new Thread(new Runnable() {
+                        public void run() {
+                            recordRepository.createRecord(new Date(), teamAssignmentId, action);
+                        }
+                    }).start();
+
                     finish();
                 }
             });
         }
     }
+
 }
