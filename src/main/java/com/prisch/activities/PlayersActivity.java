@@ -98,6 +98,13 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
                     playerRepository.createPlayer(nameInput.getText().toString());
                 }
             })
+            .setNeutralButton("Add Another", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    playerRepository.createPlayer(nameInput.getText().toString());
+                    showAddPlayerDialog();
+                }
+            })
             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
