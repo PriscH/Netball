@@ -28,6 +28,10 @@ public class GameRepository {
         return ContentUris.parseId(resultUri);
     }
 
+    public Loader<Cursor> getAllGames() {
+        return new CursorLoader(context, NetballContentProvider.URI_GAMES, null, null, null, Game.COLUMN_DATE + " DESC");
+    }
+
     public Loader<Cursor> getActiveGame() {
         String where = Game.COLUMN_ACTIVE + "=?";
         String[] parameters = new String[] {"1"};

@@ -42,7 +42,7 @@
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="View Statistics"
-            android:id="@+id/button_viewStatistics" android:paddingTop="20dp" android:paddingBottom="20dp"
+            android:text="View Games"
+            android:id="@+id/button_viewGames" android:paddingTop="20dp" android:paddingBottom="20dp"
             android:textSize="30sp"/>
 </LinearLayout>

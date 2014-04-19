@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    style="@android:style/Widget.Holo.Button"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Name"
+        android:id="@+id/text_gameName"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp"
+        android:textColor="@android:color/primary_text_dark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2014/04/19 23:00"
+        android:id="@+id/text_gameDate"
+        android:textColor="@android:color/primary_text_dark"/>
+</LinearLayout>

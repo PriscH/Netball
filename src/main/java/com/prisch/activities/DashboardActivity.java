@@ -94,6 +94,15 @@ public class DashboardActivity extends Activity implements LoaderManager.LoaderC
                 startActivity(playersIntent);
             }
         });
+
+        Button buttonViewGames = (Button)findViewById(R.id.button_viewGames);
+        buttonViewGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gamesIntent = new Intent(getApplicationContext(), GamesActivity.class);
+                startActivity(gamesIntent);
+            }
+        });
     }
 
     private void switchToRecordingMode() {

@@ -24,6 +24,7 @@
         <activity android:name=".activities.ActionsActivity" />
         <activity android:name=".activities.PlayersActivity" />
         <activity android:name=".activities.TeamActivity" />
+        <activity android:name=".activities.GamesActivity" />
 
         <provider android:name=".content.NetballContentProvider"
                   android:authorities="com.prisch.NetballTracker"
