@@ -5,7 +5,6 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.prisch.R;
 import com.prisch.model.Game;
 import com.prisch.repositories.GameRepository;
-import com.prisch.util.Constants;
+import com.prisch.util.DateUtils;
 
 import java.util.Date;
 
@@ -41,8 +40,7 @@ public class GamesActivity extends Activity implements LoaderManager.LoaderCallb
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 if (columnIndex == cursor.getColumnIndex(Game.COLUMN_DATE)) {
                     TextView textView = (TextView)view;
-                    CharSequence formattedDate = DateFormat.format(Constants.DATE_FORMAT, new Date(cursor.getLong(columnIndex)));
-                    textView.setText(formattedDate);
+                    textView.setText(DateUtils.formatDate(new Date(cursor.getLong(columnIndex))));
                     return true;
                 }
                 return false;
