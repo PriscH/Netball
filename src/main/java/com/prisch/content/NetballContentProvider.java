@@ -47,7 +47,7 @@ public class NetballContentProvider extends ContentProvider {
         URI_QUERY_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
         URI_QUERY_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
         URI_QUERY_TABLE_MAP.put(CODE_TEAMS, Team.TABLE_JOIN_PLAYERS);
-        URI_QUERY_TABLE_MAP.put(CODE_RECORDS, Record.TABLE);
+        URI_QUERY_TABLE_MAP.put(CODE_RECORDS, Record.TABLE_JOIN_TEAM_JOIN_PLAYER);
     }
 
     private static final Map<Integer, String> URI_WRITE_TABLE_MAP = new HashMap<Integer, String>();

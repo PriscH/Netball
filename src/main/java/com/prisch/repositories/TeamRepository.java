@@ -29,7 +29,7 @@ public class TeamRepository {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Team.COLUMN_GAME_ID, gameId);
         contentValues.put(Team.COLUMN_PLAYER_ID, playerId);
-        contentValues.put(Team.COLUMN_POSITION, position.toString());
+        contentValues.put(Team.COLUMN_POSITION, position.getAcronym());
 
         Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_TEAMS, contentValues);
         return ContentUris.parseId(resultUri);

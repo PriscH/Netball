@@ -2,11 +2,13 @@ package com.prisch.activities;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -49,6 +51,14 @@ public class GamesActivity extends Activity implements LoaderManager.LoaderCallb
 
         ListView listView = (ListView)findViewById(R.id.listview_games);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent statsIntent = new Intent(getApplicationContext(), GameStatsActivity.class);
+                statsIntent.putExtra(GameStatsActivity.GAME_ID_KEY, id);
+                startActivity(statsIntent);
+            }
+        });
 
         getLoaderManager().initLoader(GAMES_LOADER, null, this);
     }

@@ -17,4 +17,13 @@ public enum Action {
     INTERCEPTION,
     PRESSURE;
 
+    public static Action fromString(String string) {
+        for (Action action : values()) {
+            if (action.toString().equals(string)) {
+                return action;
+            }
+        }
+        return null;
+    }
+
 }
