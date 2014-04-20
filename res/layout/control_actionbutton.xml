@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@android:style/Widget.Holo.Button"
+    android:id="@+id/layout_action">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/image_action"
+        android:focusableInTouchMode="false"
+        android:src="@android:drawable/star_big_on"
+        android:layout_gravity="center_horizontal|top"
+        android:duplicateParentState="true"
+        android:adjustViewBounds="false"
+        android:scaleType="fitCenter"
+        android:paddingBottom="20dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ACTION"
+        android:layout_gravity="center_horizontal|bottom"
+        android:clickable="false"
+        android:password="false"
+        android:textColor="@android:color/primary_text_dark"
+        android:duplicateParentState="true"
+        android:id="@+id/text_action"
+        android:textSize="12sp"/>
+</FrameLayout>

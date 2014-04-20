@@ -1,445 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:id="@+id/layout_actions"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:weightSum="5" android:gravity="left">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:weightSum="3"
-                  android:gravity="center_horizontal"
-                  android:id="@+id/linearLayout">
+    <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:weightSum="3"
+          android:gravity="center_horizontal"
+          android:id="@+id/linearLayout">
 
-        <FrameLayout
+        <com.prisch.controls.ActionButton
+              android:layout_width="0dp"
+              android:layout_height="fill_parent"
+              android:layout_weight="1"
+              android:id="@+id/actionbutton_goal"
+              custom:imageSrc="@drawable/image_action_goal"
+              custom:text="GOAL"/>
+
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_goal"
-            android:clickable="false"
-            android:focusable="false">
+            android:id="@+id/actionbutton_miss"
+            custom:imageSrc="@drawable/image_action_miss"
+            custom:text="MISSED"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_goal"
-                android:src="@drawable/image_action_goal"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:cropToPadding="false"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="GOAL"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                android:password="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_miss">
-
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_miss"
-                android:src="@drawable/image_action_miss"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MISSED GOAL"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:id="@+id/custombutton_rebound">
-
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_rebound"
-                android:src="@drawable/image_action_rebound"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="REBOUND"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
+            android:id="@+id/actionbutton_rebound"
+            custom:imageSrc="@drawable/image_action_rebound"
+            custom:text="REBOUND"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:weightSum="3"
-                  android:gravity="center_horizontal"
-                  android:id="@+id/linearLayout1">
+    <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:weightSum="3"
+          android:gravity="center_horizontal"
+          android:id="@+id/linearLayout1">
 
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_stepping">
+            android:id="@+id/actionbutton_stepping"
+            custom:imageSrc="@drawable/action_stepping"
+            custom:text="STEPPING"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_stepping"
-                android:src="@drawable/action_stepping"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="STEPPING"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                android:password="false"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_offside">
+            android:id="@+id/actionbutton_offside"
+            custom:imageSrc="@drawable/action_offside"
+            custom:text="OFFSIDE"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_offside"
-                android:src="@drawable/action_offside"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OFFSIDE"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_holding">
-
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_holding"
-                android:src="@drawable/action_holding"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HOLDING"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
+            android:id="@+id/actionbutton_holding"
+            custom:imageSrc="@drawable/action_holding"
+            custom:text="HOLDING"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:weightSum="3"
-                  android:gravity="center_horizontal"
-                  android:id="@+id/linearLayout2">
+    <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:weightSum="3"
+          android:gravity="center_horizontal"
+          android:id="@+id/linearLayout2">
 
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_contact">
+            android:id="@+id/actionbutton_contact"
+            custom:imageSrc="@drawable/action_contact"
+            custom:text="CONTACT"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_contact"
-                android:src="@drawable/action_contact"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CONTACT"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                android:password="false"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_obstruction">
+            android:id="@+id/actionbutton_obstruction"
+            custom:imageSrc="@drawable/action_obstruction"
+            custom:text="OBSTRUCTION"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_obstruction"
-                android:src="@drawable/action_obstruction"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OBSTRUCTION"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_handling">
-
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_handling"
-                android:src="@drawable/action_handling"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HANDLING"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
+            android:id="@+id/actionbutton_handling"
+            custom:imageSrc="@drawable/action_handling"
+            custom:text="HANDLING"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:weightSum="3"
-                  android:gravity="center_horizontal"
-                  android:id="@+id/linearLayout3">
+    <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:weightSum="3"
+          android:gravity="center_horizontal"
+          android:id="@+id/linearLayout3">
 
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_badpass">
+            android:id="@+id/actionbutton_badPass"
+            custom:imageSrc="@drawable/action_badpass"
+            custom:text="BAD PASS"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_badPass"
-                android:src="@drawable/action_badpass"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BAD PASS"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                android:password="false"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_badcatch">
+            android:id="@+id/actionbutton_badCatch"
+            custom:imageSrc="@drawable/action_badcatch"
+            custom:text="BAD CATCH"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_badCatch"
-                android:src="@drawable/action_badcatch"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MISSED CATCH"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:phoneNumber="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_breaking">
-
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_breaking"
-                android:src="@drawable/image_action_breaking"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:focusableInTouchMode="false"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LINE BREAK"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:phoneNumber="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
+            android:id="@+id/actionbutton_breaking"
+            custom:imageSrc="@drawable/image_action_breaking"
+            custom:text="BREAKING"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:weightSum="3"
-                  android:gravity="center_horizontal"
-                  android:id="@+id/linearLayout4">
+    <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:weightSum="3"
+          android:gravity="center_horizontal"
+          android:id="@+id/linearLayout4">
 
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_interception">
+            android:id="@+id/actionbutton_interception"
+            custom:imageSrc="@drawable/action_interception"
+            custom:text="INTERCEPT"/>
 
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_interception"
-                android:src="@drawable/action_interception"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="INTERCEPTION"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                android:password="false"
-                android:singleLine="false"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
-
-        <FrameLayout
+        <com.prisch.controls.ActionButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:id="@+id/custombutton_pressure">
-
-            <ImageButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/button_pressure"
-                android:src="@drawable/action_pressure"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="false"
-                android:paddingBottom="30dp"
-                android:duplicateParentState="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PRESSURE"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="8dp"
-                android:textColor="@android:color/primary_text_dark"
-                android:duplicateParentState="true"/>
-        </FrameLayout>
+            android:id="@+id/actionbutton_pressure"
+            custom:imageSrc="@drawable/action_pressure"
+            custom:text="PRESSURE"/>
     </LinearLayout>
 </LinearLayout>

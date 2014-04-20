@@ -26,7 +26,7 @@ public class RecordRepository {
         contentValues.put(Record.COLUMN_TEAM_ID, teamAssignmentId);
         contentValues.put(Record.COLUMN_ACTION, action.toString());
 
-        Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_GAMES, contentValues);
+        Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_RECORDS, contentValues);
         return ContentUris.parseId(resultUri);
     }
 }
