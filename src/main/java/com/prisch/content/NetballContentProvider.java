@@ -163,7 +163,7 @@ public class NetballContentProvider extends ContentProvider {
     // ===== Query Operations =====
 
     private Cursor getActiveTeam() {
-        final String QUERY = "SELECT * FROM " + Team.TABLE_JOIN_PLAYERS
+        final String QUERY = "SELECT team.*, player.name FROM " + Team.TABLE_JOIN_PLAYERS
                              + " WHERE " + Team.COLUMN_GAME_ID + " IN "
                              + "(SELECT " + Game.COLUMN_ID + " FROM " + Game.TABLE
                                + " WHERE " + Game.COLUMN_ACTIVE + " = 1)";
