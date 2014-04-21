@@ -163,10 +163,9 @@ public class NetballContentProvider extends ContentProvider {
     // ===== Query Operations =====
 
     private Cursor getActiveTeam() {
-        final String QUERY = "SELECT team.*, player.name FROM " + Team.TABLE_JOIN_PLAYERS
-                             + " WHERE " + Team.COLUMN_GAME_ID + " IN "
-                             + "(SELECT " + Game.COLUMN_ID + " FROM " + Game.TABLE
-                               + " WHERE " + Game.COLUMN_ACTIVE + " = 1)";
+        final String QUERY = String.format("SELECT %s, %s FROM %s", Team.prefixTable("*"), Player.prefixTable(Player.NAME), Team.TABLE_JOIN_PLAYERS)
+                             + String.format(" WHERE %s IN", Team.GAME_ID)
+                             + String.format(" (SELECT %s FROM %s WHERE %s = 1", Game.ID, Game.TABLE, Game.ACTIVE);
 
         return databaseHelper.getWritableDatabase().rawQuery(QUERY, null);
     }

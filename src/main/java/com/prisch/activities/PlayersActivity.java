@@ -34,7 +34,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
 
         playerRepository = new PlayerRepository(this);
 
-        adapter = new SimpleCursorAdapter(this, R.layout.list_players, null, new String[] {Player.COLUMN_NAME}, new int[] {R.id.text_playerName}, 0);
+        adapter = new SimpleCursorAdapter(this, R.layout.list_players, null, new String[] {Player.NAME}, new int[] {R.id.text_playerName}, 0);
 
         ListView listView = (ListView)findViewById(R.id.listview_players);
         listView.setAdapter(adapter);
@@ -127,7 +127,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
     private void showRenamePlayerDialog(final int position) {
         final EditText nameInput = new EditText(this);
         Cursor cursor = (Cursor)adapter.getItem(position);
-        nameInput.append(cursor.getString(cursor.getColumnIndex(Player.COLUMN_NAME)));
+        nameInput.append(cursor.getString(cursor.getColumnIndex(Player.NAME)));
 
         final Dialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Rename player")

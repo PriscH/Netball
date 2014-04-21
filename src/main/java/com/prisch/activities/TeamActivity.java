@@ -52,7 +52,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
         gameRepository = new GameRepository(this);
         teamRepository = new TeamRepository(this);
 
-        adapter = new SimpleCursorAdapter(this, R.layout.list_players, null, new String[] {Player.COLUMN_NAME}, new int[] {R.id.text_playerName}, 0);
+        adapter = new SimpleCursorAdapter(this, R.layout.list_players, null, new String[] {Player.NAME}, new int[] {R.id.text_playerName}, 0);
 
         ListView listView = (ListView)findViewById(R.id.listview_players);
         listView.setAdapter(adapter);

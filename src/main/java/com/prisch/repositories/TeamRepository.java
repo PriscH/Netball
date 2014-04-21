@@ -27,9 +27,9 @@ public class TeamRepository {
 
     public long createPlayerOnTeam(long gameId, long playerId, Position position) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Team.COLUMN_GAME_ID, gameId);
-        contentValues.put(Team.COLUMN_PLAYER_ID, playerId);
-        contentValues.put(Team.COLUMN_POSITION, position.getAcronym());
+        contentValues.put(Team.GAME_ID, gameId);
+        contentValues.put(Team.PLAYER_ID, playerId);
+        contentValues.put(Team.POSITION, position.getAcronym());
 
         Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_TEAMS, contentValues);
         return ContentUris.parseId(resultUri);

@@ -20,20 +20,20 @@ public class GameRepository {
 
     public long createGame(Date date, String name, boolean active) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Game.COLUMN_DATE, date.getTime());
-        contentValues.put(Game.COLUMN_NAME, name);
-        contentValues.put(Game.COLUMN_ACTIVE, active);
+        contentValues.put(Game.DATE, date.getTime());
+        contentValues.put(Game.NAME, name);
+        contentValues.put(Game.ACTIVE, active);
 
         Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_GAMES, contentValues);
         return ContentUris.parseId(resultUri);
     }
 
     public Loader<Cursor> getAllGames() {
-        return new CursorLoader(context, NetballContentProvider.URI_GAMES, null, null, null, Game.COLUMN_DATE + " DESC");
+        return new CursorLoader(context, NetballContentProvider.URI_GAMES, null, null, null, Game.DATE + " DESC");
     }
 
     public Loader<Cursor> getActiveGame() {
-        String where = Game.COLUMN_ACTIVE + "=?";
+        String where = Game.ACTIVE + "=?";
         String[] parameters = new String[] {"1"};
 
         return new CursorLoader(context, NetballContentProvider.URI_GAMES, null, where, parameters, null);
@@ -41,9 +41,9 @@ public class GameRepository {
 
     public void stopActiveGame() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Game.COLUMN_ACTIVE, false);
+        contentValues.put(Game.ACTIVE, false);
 
-        String where = Game.COLUMN_ACTIVE + "=?";
+        String where = Game.ACTIVE + "=?";
         String[] parameters = new String[] {"1"};
 
         context.getContentResolver().update(NetballContentProvider.URI_GAMES, contentValues, where, parameters);

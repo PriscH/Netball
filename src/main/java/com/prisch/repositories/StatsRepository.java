@@ -21,9 +21,9 @@ public class StatsRepository {
 
         Cursor recordsCursor = recordRepository.getRecordsForGame(gameId);
         while (recordsCursor.moveToNext()) {
-            String playerName = recordsCursor.getString(recordsCursor.getColumnIndex(Player.COLUMN_NAME));
-            Position playerPosition = Position.fromAcronym(recordsCursor.getString(recordsCursor.getColumnIndex(Team.COLUMN_POSITION)));
-            Action playerAction = Action.fromString(recordsCursor.getString(recordsCursor.getColumnIndex(Record.COLUMN_ACTION)));
+            String playerName = recordsCursor.getString(recordsCursor.getColumnIndex(Player.NAME));
+            Position playerPosition = Position.fromAcronym(recordsCursor.getString(recordsCursor.getColumnIndex(Team.POSITION)));
+            Action playerAction = Action.fromString(recordsCursor.getString(recordsCursor.getColumnIndex(Record.ACTION)));
 
             PlayerStats playerStats = gameStats.getOrCreate(playerName, playerPosition);
             playerStats.incrementActionCount(playerAction);

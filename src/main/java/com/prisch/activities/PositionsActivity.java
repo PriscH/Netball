@@ -66,9 +66,9 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         positionMap.clear();
         while (data.moveToNext()) {
-            Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.COLUMN_POSITION)));
-            Long teamAssignmentId = data.getLong(data.getColumnIndex(Team.COLUMN_ID));
-            String playerName = data.getString(data.getColumnIndex(Player.COLUMN_NAME));
+            Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.POSITION)));
+            Long teamAssignmentId = data.getLong(data.getColumnIndex(Team.ID));
+            String playerName = data.getString(data.getColumnIndex(Player.NAME));
             configureButton(position, teamAssignmentId, playerName);
         }
     }

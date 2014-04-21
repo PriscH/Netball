@@ -4,6 +4,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Player {
 
+    // ===== Convenience Methods =====
+
+    public static String prefixTable(String column) {
+        return TABLE + "." + column;
+    }
+
     // ===== Database Scaffolding =====
 
     public static void onCreate(SQLiteDatabase db) {
@@ -17,13 +23,14 @@ public class Player {
 
     // ===== Constants =====
 
+    public static final String ID = "_id";
+    public static final String NAME = "name";
+
     public static final String TABLE = "player";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
-                                                + COLUMN_ID     + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                                + COLUMN_NAME   + " TEXT NOT NULL UNIQUE);";
+                                                + ID    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                                + NAME  + " TEXT NOT NULL UNIQUE);";
     private static final String DROP_SCRIPT = "DROP TABLE " + TABLE;
 }
 
