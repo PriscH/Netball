@@ -141,7 +141,7 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
             Position previousPosition = teamMap.remove(playerId);
             outstandingPositions.add(0, previousPosition);
             positionView.setText("");
-        } else {
+        } else if (!outstandingPositions.isEmpty()) {
             Position currentPosition = outstandingPositions.remove(0);
             teamMap.put(playerId, currentPosition);
             positionView.setText(currentPosition.getAcronym());
