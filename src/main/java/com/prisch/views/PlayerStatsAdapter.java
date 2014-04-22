@@ -1,6 +1,8 @@
 package com.prisch.views;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,14 @@ public class PlayerStatsAdapter extends ArrayAdapter<PlayerStatsListItem> {
 
         TextView valueText = (TextView)listItemView.findViewById(R.id.text_actionCount);
         valueText.setText(listItem.getItemValue());
+
+        if (listItem.isHeader()) {
+            nameText.setTypeface(null, Typeface.BOLD);
+            nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+
+            valueText.setTypeface(null, Typeface.BOLD);
+            valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+        }
 
         return listItemView;
     }
