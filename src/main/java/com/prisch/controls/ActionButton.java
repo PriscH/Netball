@@ -48,6 +48,7 @@ public class ActionButton extends FrameLayout {
         actionText.setText(text);
     }
 
+    // TODO: Figure out a way to avoid having to overwrite this for all properties
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
