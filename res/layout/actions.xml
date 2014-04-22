@@ -124,7 +124,7 @@
             android:layout_weight="1"
             android:id="@+id/actionbutton_badPass"
             custom:imageSrc="@drawable/action_badpass"
-            custom:text="BAD PASS"/>
+            custom:text="POOR PASS"/>
 
         <com.prisch.controls.ActionButton
             android:layout_width="0dp"
@@ -132,7 +132,7 @@
             android:layout_weight="1"
             android:id="@+id/actionbutton_badCatch"
             custom:imageSrc="@drawable/action_badcatch"
-            custom:text="BAD CATCH"/>
+            custom:text="POOR CATCH"/>
 
         <com.prisch.controls.ActionButton
             android:layout_width="0dp"

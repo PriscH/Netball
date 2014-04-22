@@ -5,9 +5,16 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ListView;
 import com.prisch.R;
 import com.prisch.loaders.GameStatsLoader;
 import com.prisch.model.GameStats;
+import com.prisch.model.PlayerStats;
+import com.prisch.views.PlayerStatsAdapter;
+import com.prisch.views.PlayerStatsListItem;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class GameStatsActivity extends Activity implements LoaderManager.LoaderCallbacks<GameStats> {
 
@@ -15,12 +22,18 @@ public class GameStatsActivity extends Activity implements LoaderManager.LoaderC
 
     private final static int GAME_STATS_LOADER = 0;
 
+    private PlayerStatsAdapter adapter;
+
     // ===== Lifecycle Methods =====
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamestats);
+
+        adapter = new PlayerStatsAdapter(this);
+        ListView listView = (ListView)findViewById(R.id.listView_gameStats);
+        listView.setAdapter(adapter);
 
         getLoaderManager().initLoader(GAME_STATS_LOADER, null, this);
     }
@@ -39,10 +52,16 @@ public class GameStatsActivity extends Activity implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<GameStats> loader, GameStats data) {
+        List<PlayerStatsListItem> listItems = new LinkedList<PlayerStatsListItem>();
+        for (PlayerStats playerStats : data.getPlayerStats()) {
+            listItems.addAll(PlayerStatsListItem.buildFrom(playerStats));
+        }
+
+        adapter.addAll(listItems);
     }
 
     @Override
     public void onLoaderReset(Loader<GameStats> loader) {
-        // Nothing to cleanup
+        adapter.clear();
     }
 }

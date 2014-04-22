@@ -2,20 +2,30 @@ package com.prisch.model;
 
 public enum Action {
 
-    GOAL,
-    MISSED,
-    REBOUND,
-    STEPPING,
-    OFFSIDE,
-    HOLDING,
-    CONTACT,
-    OBSTRUCTION,
-    HANDLING,
-    BADPASS,
-    BADCATCH,
-    BREAKING,
-    INTERCEPTION,
-    PRESSURE;
+    GOAL            ("Goals"),
+    MISSED          ("Missed Attempts"),
+    REBOUND         ("Rebounds Caught"),
+    STEPPING        ("Stepping Faults"),
+    OFFSIDE         ("Caught Offside"),
+    HOLDING         ("Holding the Ball"),
+    CONTACT         ("Contact Faults"),
+    OBSTRUCTION     ("Obstructing Players"),
+    HANDLING        ("Handling the Ball"),
+    BADPASS         ("Poor Passes"),
+    BADCATCH        ("Poor Catches"),
+    BREAKING        ("Breaking the Line"),
+    INTERCEPTION    ("Ball Interceptions"),
+    PRESSURE        ("Pressuring Players");
+
+    private final String description;
+
+    private Action(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     public static Action fromString(String string) {
         for (Action action : values()) {
