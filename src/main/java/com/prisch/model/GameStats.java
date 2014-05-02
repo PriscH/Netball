@@ -27,6 +27,23 @@ public class GameStats {
         return playerStatsList;
     }
 
+    public Map<Position, List<PlayerStats>> getPlayerStatsByPosition() {
+        Map<Position, List<PlayerStats>> positionStatsMap = new HashMap<Position, List<PlayerStats>>();
+
+        for (String playerName : playerStatsMap.keySet()) {
+            Map<Position, PlayerStats> playerPositionMap = playerStatsMap.get(playerName);
+            for (Position position : playerPositionMap.keySet()) {
+                if (!positionStatsMap.containsKey(position)) {
+                    positionStatsMap.put(position, new LinkedList<PlayerStats>());
+                }
+                positionStatsMap.get(position).add(playerPositionMap.get(position));
+            }
+        }
+
+        return positionStatsMap;
+
+    }
+
     public PlayerStats getOrCreate(String playerName, Position position) {
         if (!playerStatsMap.containsKey(playerName)) {
             playerStatsMap.put(playerName, new HashMap<Position, PlayerStats>());

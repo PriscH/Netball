@@ -56,4 +56,12 @@ public enum Position {
         }
         return null;
     }
+
+    public static Position withIndex(int index) {
+        if (index >= values().length) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        return values()[index];
+    }
 }

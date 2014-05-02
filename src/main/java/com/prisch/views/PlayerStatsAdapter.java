@@ -1,8 +1,6 @@
 package com.prisch.views;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,33 +10,34 @@ import com.prisch.R;
 
 public class PlayerStatsAdapter extends ArrayAdapter<PlayerStatsListItem> {
 
-    private static final int LAYOUT_ID = R.layout.list_playerstats;
+    private static final int HEADER_LAYOUT_ID = R.layout.list_header;
+    private static final int ITEM_LAYOUT_ID = R.layout.list_playerstats;
 
     public PlayerStatsAdapter(Context context) {
-        super(context, LAYOUT_ID);
+        super(context, ITEM_LAYOUT_ID);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final PlayerStatsListItem listItem = getItem(position);
-
         LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listItemView = layoutInflater.inflate(LAYOUT_ID, parent, false);
 
-        TextView nameText = (TextView)listItemView.findViewById(R.id.text_actionName);
-        nameText.setText(listItem.getItemName());
-
-        TextView valueText = (TextView)listItemView.findViewById(R.id.text_actionCount);
-        valueText.setText(listItem.getItemValue());
-
+        View listView;
+        final PlayerStatsListItem listItem = getItem(position);
         if (listItem.isHeader()) {
-            nameText.setTypeface(null, Typeface.BOLD);
-            nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            listView = layoutInflater.inflate(HEADER_LAYOUT_ID, parent, false);
 
-            valueText.setTypeface(null, Typeface.BOLD);
-            valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            TextView nameText = (TextView)listView.findViewById(R.id.text_header);
+            nameText.setText(listItem.getItemName());
+        } else {
+            listView = layoutInflater.inflate(ITEM_LAYOUT_ID, parent, false);
+
+            TextView nameText = (TextView)listView.findViewById(R.id.text_actionName);
+            nameText.setText(listItem.getItemName());
+
+            TextView valueText = (TextView)listView.findViewById(R.id.text_actionCount);
+            valueText.setText(listItem.getItemValue());
         }
 
-        return listItemView;
+        return listView;
     }
 }

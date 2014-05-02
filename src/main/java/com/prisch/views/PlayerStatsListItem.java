@@ -3,10 +3,7 @@ package com.prisch.views;
 import com.prisch.model.Action;
 import com.prisch.model.PlayerStats;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PlayerStatsListItem {
 
@@ -37,6 +34,16 @@ public class PlayerStatsListItem {
         // Add the other Actions
         for (Action action : actions) {
             listItems.add(new PlayerStatsListItem(action.getDescription(), Integer.toString(playerStats.getActionCount(action)), false));
+        }
+
+        return listItems;
+    }
+
+    public static List<PlayerStatsListItem> buildFrom(Collection<PlayerStats> playerStatsList) {
+        List<PlayerStatsListItem> listItems = new LinkedList<PlayerStatsListItem>();
+
+        for (PlayerStats playerStats : playerStatsList) {
+            listItems.addAll(buildFrom(playerStats));
         }
 
         return listItems;
