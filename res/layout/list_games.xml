@@ -17,7 +17,8 @@
         android:id="@+id/text_gameName"
         android:layout_gravity="center_horizontal"
         android:textSize="30sp"
-        android:textColor="@android:color/primary_text_dark"/>
+        android:textColor="@android:color/primary_text_dark"
+        android:gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"

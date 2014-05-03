@@ -7,10 +7,12 @@ import com.prisch.model.*;
 public class StatsRepository {
 
     private Context context;
+    private TeamRepository teamRepository;
     private RecordRepository recordRepository;
 
     public StatsRepository(Context context) {
         this.context = context;
+        this.teamRepository = new TeamRepository(context);
         this.recordRepository = new RecordRepository(context);
     }
 
@@ -19,6 +21,7 @@ public class StatsRepository {
     public GameStats getStatsForGame(Long gameId) {
         GameStats gameStats = new GameStats(gameId);
 
+        // Add the recorded actions for the players
         Cursor recordsCursor = recordRepository.getRecordsForGame(gameId);
         while (recordsCursor.moveToNext()) {
             String playerName = recordsCursor.getString(recordsCursor.getColumnIndex(Player.NAME));
@@ -27,6 +30,14 @@ public class StatsRepository {
 
             PlayerStats playerStats = gameStats.getOrCreate(playerName, playerPosition);
             playerStats.incrementActionCount(playerAction);
+        }
+
+        // Add any players for whom no actions were recorded, but that are included in the team
+        Cursor teamCursor = teamRepository.getTeamForGame(gameId);
+        while (teamCursor.moveToNext()) {
+            String playerName = teamCursor.getString(teamCursor.getColumnIndex(Player.NAME));
+            Position playerPosition = Position.fromAcronym(teamCursor.getString(teamCursor.getColumnIndex(Team.POSITION)));
+            gameStats.getOrCreate(playerName, playerPosition);
         }
 
         return gameStats;
