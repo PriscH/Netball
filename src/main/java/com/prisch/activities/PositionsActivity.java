@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import com.prisch.R;
@@ -39,6 +40,8 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
     // Map from a Position to the Team assignment ID (Player and Position) currently assigned to that Position
     private Map<Position, Long> positionMap = new HashMap<Position, Long>(7);
 
+    private Long gameId;
+
     // ===== Lifecycle Methods =====
 
     @Override
@@ -53,7 +56,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.prisch.R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.positions, menu);
         return true;
     }
 
@@ -70,12 +73,29 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
             Long teamAssignmentId = data.getLong(data.getColumnIndex(Team.ID));
             String playerName = data.getString(data.getColumnIndex(Player.NAME));
             configureButton(position, teamAssignmentId, playerName);
+
+            gameId = data.getLong(data.getColumnIndex(Team.GAME_ID));
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // Nothing to cleanup
+    }
+
+    // ===== Event Listeners =====
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_substitutions:
+                Intent substitutionIntent = new Intent(getApplicationContext(), SubstitutionActivity.class);
+                substitutionIntent.putExtra(SubstitutionActivity.GAME_KEY, gameId);
+                startActivity(substitutionIntent);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // ===== Helper Methods =====

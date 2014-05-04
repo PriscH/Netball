@@ -30,6 +30,7 @@ public class TeamRepository {
         contentValues.put(Team.GAME_ID, gameId);
         contentValues.put(Team.PLAYER_ID, playerId);
         contentValues.put(Team.POSITION, position.getAcronym());
+        contentValues.put(Team.ACTIVE, true);
 
         Uri resultUri = context.getContentResolver().insert(NetballContentProvider.URI_TEAMS, contentValues);
         return ContentUris.parseId(resultUri);
@@ -44,5 +45,12 @@ public class TeamRepository {
         String[] parameters = new String[] {Long.toString(gameId)};
 
         return context.getContentResolver().query(NetballContentProvider.URI_TEAMS, null, where, parameters, null);
+    }
+
+    public CursorLoader getTeamForGameLoader(long gameId) {
+        String where = Team.GAME_ID + "=?";
+        String[] parameters = new String[] {Long.toString(gameId)};
+
+        return new CursorLoader(context, NetballContentProvider.URI_TEAMS, null, where, parameters, null);
     }
 }

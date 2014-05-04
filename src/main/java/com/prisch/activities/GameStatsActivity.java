@@ -71,7 +71,7 @@ public class GameStatsActivity extends FragmentActivity implements LoaderManager
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.gamestats, menu);
         return true;
     }
 

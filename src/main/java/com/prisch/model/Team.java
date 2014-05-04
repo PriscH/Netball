@@ -27,6 +27,7 @@ public class Team {
     public static final String GAME_ID = "game_id";
     public static final String PLAYER_ID = "player_id";
     public static final String POSITION = "position";
+    public static final String ACTIVE = "active";
 
     public static final String TABLE = "team";
     public static final String TABLE_JOIN_PLAYERS = String.format("%s LEFT OUTER JOIN %s", TABLE, Player.TABLE)
@@ -36,7 +37,8 @@ public class Team {
                                                 + ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                                 + GAME_ID   + " INTEGER NOT NULL,"
                                                 + PLAYER_ID + " INTEGER NOT NULL,"
-                                                + POSITION  + " TEXT NOT NULL);";
+                                                + POSITION  + " TEXT NOT NULL,"
+                                                + ACTIVE    + " NUMERIC NOT NULL);";
     private static final String DROP_SCRIPT = "DROP TABLE " + TABLE;
 
 }

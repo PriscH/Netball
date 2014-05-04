@@ -165,7 +165,8 @@ public class NetballContentProvider extends ContentProvider {
     private Cursor getActiveTeam() {
         final String QUERY = String.format("SELECT %s, %s FROM %s", Team.prefixTable("*"), Player.prefixTable(Player.NAME), Team.TABLE_JOIN_PLAYERS)
                              + String.format(" WHERE %s IN", Team.GAME_ID)
-                             + String.format(" (SELECT %s FROM %s WHERE %s = 1)", Game.ID, Game.TABLE, Game.ACTIVE);
+                             + String.format(" (SELECT %s FROM %s WHERE %s = 1)", Game.ID, Game.TABLE, Game.ACTIVE)
+                             + String.format(" AND %s = 1", Team.prefixTable(Team.ACTIVE));
 
         return databaseHelper.getWritableDatabase().rawQuery(QUERY, null);
     }

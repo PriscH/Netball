@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:background="@android:color/holo_blue_bright"
+        android:id="@+id/text_teamMembers">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Team Members"
+            android:singleLine="false"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="24sp"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listview_teamMembers"
+        android:headerDividersEnabled="false"
+        android:layout_below="@+id/text_teamMembers"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_below="@+id/listview_teamMembers"
+        android:id="@+id/text_otherPlayers">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Players"
+            android:singleLine="false"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="24sp"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listview_otherPlayers"
+        android:headerDividersEnabled="false"
+        android:layout_below="@+id/text_otherPlayers"/>
+
+</RelativeLayout>

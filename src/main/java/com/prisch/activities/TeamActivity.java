@@ -1,6 +1,8 @@
 package com.prisch.activities;
 
-import android.app.*;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
@@ -11,14 +13,13 @@ import android.view.WindowManager;
 import android.widget.*;
 import com.prisch.R;
 import com.prisch.model.Player;
-import com.prisch.model.Position;
 import com.prisch.repositories.GameRepository;
 import com.prisch.repositories.PlayerRepository;
 import com.prisch.repositories.TeamRepository;
 
-import java.util.*;
+import java.util.Date;
 
-public class TeamActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class TeamActivity extends BaseTeamActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int PLAYER_LOADER = 0;
 
@@ -27,19 +28,6 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
     private TeamRepository teamRepository;
 
     private CursorAdapter adapter;
-
-    // List of Positions that have not yet been assigned
-    private List<Position> outstandingPositions = new LinkedList<Position>();
-    // Map from a Player's ID to the Position currently assigned to that Player
-    private Map<Long, Position> teamMap = new HashMap<Long, Position>(7);
-
-    // ===== Constructor =====
-
-    public TeamActivity() {
-        for (Position position : Position.values()) {
-            outstandingPositions.add(position);
-        }
-    }
 
     // ===== Lifecycle Methods =====
 
@@ -63,20 +51,14 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
             }
         });
 
-        getLoaderManager().initLoader(PLAYER_LOADER, null, this);
-
-        getActionBar().setCustomView(R.layout.actionbar_selectteam);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
-        View doneButton = findViewById(R.id.custombutton_selectDone);
-        doneButton.setOnClickListener(new View.OnClickListener() {
+        findDoneButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showTeamNameDialog();
             }
         });
 
-        updateActionBar();
+        getLoaderManager().initLoader(PLAYER_LOADER, null, this);
     }
 
     @Override
@@ -130,38 +112,10 @@ public class TeamActivity extends Activity implements LoaderManager.LoaderCallba
 
     private void acceptTeam(String name) {
         long gameId = gameRepository.createGame(new Date(), name, true);
-        teamRepository.createTeam(gameId, teamMap);
+        teamRepository.createTeam(gameId, getTeamMap());
 
         Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
         startActivity(positionsIntent);
     }
 
-    private void togglePlayerPosition(long playerId, TextView positionView) {
-        if (teamMap.containsKey(playerId)) {
-            Position previousPosition = teamMap.remove(playerId);
-            outstandingPositions.add(0, previousPosition);
-            positionView.setText("");
-        } else if (!outstandingPositions.isEmpty()) {
-            Position currentPosition = outstandingPositions.remove(0);
-            teamMap.put(playerId, currentPosition);
-            positionView.setText(currentPosition.getAcronym());
-        }
-
-        updateActionBar();
-    }
-
-    // ===== Helper Methods =====
-
-    private void updateActionBar() {
-        TextView instructionText = (TextView)findViewById(R.id.text_selectPosition);
-        View acceptButton = findViewById(R.id.custombutton_selectDone);
-
-        if (outstandingPositions.isEmpty()) {
-            instructionText.setText("");
-            acceptButton.setEnabled(true);
-        } else {
-            instructionText.setText("Select the " + outstandingPositions.get(0));
-            acceptButton.setEnabled(false);
-        }
-    }
 }

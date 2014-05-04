@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Substitutions"
+        android:id="@+id/menu_substitutions"
+        android:showAsAction="never"/>
+
+    <item
+        android:title="View Game Recording"
+        android:id="@+id/menu_viewRecording"
+        android:showAsAction="never"/>
+
+    <item
+        android:title="Stop Recording"
+        android:id="@+id/menu_stopRecording"
+        android:showAsAction="never"/>
+
+</menu>

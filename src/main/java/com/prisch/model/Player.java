@@ -4,6 +4,28 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Player {
 
+    // ===== Fields =====
+
+    private final long id;
+    private final String name;
+
+    // ===== Constructors =====
+
+    public Player(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // ===== Accessors =====
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     // ===== Convenience Methods =====
 
     public static String prefixTable(String column) {

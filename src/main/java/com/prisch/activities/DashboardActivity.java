@@ -33,7 +33,7 @@ public class DashboardActivity extends Activity implements LoaderManager.LoaderC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.dashboard, menu);
         return true;
     }
 

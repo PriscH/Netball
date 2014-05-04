@@ -2,7 +2,6 @@ package com.prisch.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import com.prisch.R;
 import com.prisch.controls.ActionButton;
@@ -50,12 +49,6 @@ public class ActionsActivity extends Activity {
 
         disableButtonsAccordingToPosition();
         setupButtonListeners();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.prisch.R.menu.main, menu);
-        return true;
     }
 
     // ===== Helper Methods =====

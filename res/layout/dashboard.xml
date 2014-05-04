@@ -20,7 +20,8 @@
         android:layout_gravity="center"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="match_parent"
@@ -31,7 +32,8 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:textSize="30sp"
-        android:singleLine="false"/>
+        android:singleLine="false"
+        android:visibility="gone"/>
 
     <Button
             android:layout_width="fill_parent"
