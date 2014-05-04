@@ -2,64 +2,52 @@ package com.prisch.activities;
 
 import android.app.LoaderManager;
 import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
 import com.prisch.R;
+import com.prisch.loaders.SubstitutionLoader;
 import com.prisch.model.Player;
-import com.prisch.model.Team;
-import com.prisch.repositories.TeamRepository;
-import com.prisch.views.PlayerAdapter;
+import com.prisch.views.SubstitutionAdapter;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-public class SubstitutionActivity extends BaseTeamActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SubstitutionActivity extends BaseTeamActivity implements LoaderManager.LoaderCallbacks<Map<Boolean, List<Player>>> {
 
     public static final String GAME_KEY = "GAME_KEY";
 
-    private static final int TEAM_LOADER = 0;
+    private static final int SUBSTITUTION_LOADER = 0;
 
-    private TeamRepository teamRepository;
-
-    private PlayerAdapter teamAdapter;
-
-    private List<Player> teamPlayers = new LinkedList<Player>();
+    private SubstitutionAdapter adapter;
 
     // ===== Lifecycle Methods =====
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.substitution);
+        setContentView(R.layout.players);
 
-        teamRepository = new TeamRepository(this);
+        adapter = new SubstitutionAdapter(this);
+        ListView playerListView = (ListView)findViewById(R.id.listview_players);
+        playerListView.setAdapter(adapter);
 
-        teamAdapter = new PlayerAdapter(this);
-        ListView teamListView = (ListView)findViewById(R.id.listview_teamMembers);
-        teamListView.setAdapter(teamAdapter);
-
-        getLoaderManager().initLoader(TEAM_LOADER, null, this);
+        getLoaderManager().initLoader(SUBSTITUTION_LOADER, null, this);
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return teamRepository.getTeamForGameLoader(getIntent().getLongExtra(GAME_KEY, 0));
+    public SubstitutionLoader onCreateLoader(int id, Bundle args) {
+        return new SubstitutionLoader(this, getIntent().getLongExtra(GAME_KEY, 0));
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        while (data.moveToNext()) {
-            Player player = new Player(data.getLong(data.getColumnIndex(Team.PLAYER_ID)), data.getString(data.getColumnIndex(Player.NAME)));
-            teamPlayers.add(player);
-        }
-
-        teamAdapter.addAll(teamPlayers);
+    public void onLoadFinished(Loader<Map<Boolean, List<Player>>> loader, Map<Boolean, List<Player>> data) {
+        adapter.addTeamPlayers(data.get(true));
+        adapter.addOtherPlayers(data.get(false));
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        teamAdapter.clear();
+    public void onLoaderReset(Loader<Map<Boolean, List<Player>>> loader) {
+        adapter.clearAll();
     }
 
 }

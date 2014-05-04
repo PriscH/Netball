@@ -46,11 +46,4 @@ public class TeamRepository {
 
         return context.getContentResolver().query(NetballContentProvider.URI_TEAMS, null, where, parameters, null);
     }
-
-    public CursorLoader getTeamForGameLoader(long gameId) {
-        String where = Team.GAME_ID + "=?";
-        String[] parameters = new String[] {Long.toString(gameId)};
-
-        return new CursorLoader(context, NetballContentProvider.URI_TEAMS, null, where, parameters, null);
-    }
 }

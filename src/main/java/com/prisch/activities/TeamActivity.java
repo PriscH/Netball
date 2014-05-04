@@ -63,7 +63,7 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return playerRepository.getAllPlayers();
+        return playerRepository.getAllPlayersLoader();
     }
 
     @Override

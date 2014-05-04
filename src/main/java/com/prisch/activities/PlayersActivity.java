@@ -57,7 +57,7 @@ public class PlayersActivity extends Activity implements LoaderManager.LoaderCal
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return playerRepository.getAllPlayers();
+        return playerRepository.getAllPlayersLoader();
     }
 
     @Override
