@@ -29,6 +29,8 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
     private CursorAdapter adapter;
 
+
+
     // ===== Lifecycle Methods =====
 
     @Override

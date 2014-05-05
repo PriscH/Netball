@@ -11,14 +11,16 @@ import com.prisch.model.Position;
 import com.prisch.model.Team;
 import com.prisch.repositories.PlayerRepository;
 import com.prisch.repositories.TeamRepository;
-import com.prisch.views.SubstitutionAdapter;
+import com.prisch.views.TeamAdapter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SubstitutionActivity extends BaseTeamActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String GAME_KEY = "GAME_KEY";
+
+    private static final String TEAM_HEADING = "Team Members";
+    private static final String PLAYERS_HEADING = "Other Players";
 
     private static final int TEAM_LOADER = 0;
     private static final int PLAYERS_LOADER = 1;
@@ -26,8 +28,8 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     private TeamRepository teamRepository;
     private PlayerRepository playerRepository;
 
-    private ListView playerListView;
-    private SubstitutionAdapter adapter;
+    private ListView listView;
+    private TeamAdapter adapter;
 
     private Set<Long> teamPlayerIds = new HashSet<Long>();
 
@@ -41,9 +43,9 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
         teamRepository = new TeamRepository(this);
         playerRepository = new PlayerRepository(this);
 
-        adapter = new SubstitutionAdapter(this);
-        playerListView = (ListView)findViewById(R.id.listview_players);
-        playerListView.setAdapter(adapter);
+        adapter = new TeamAdapter(this, new String[] {TEAM_HEADING, PLAYERS_HEADING});
+        listView = (ListView)findViewById(R.id.listview_players);
+        listView.setAdapter(adapter);
 
         getLoaderManager().initLoader(TEAM_LOADER, null, this);
     }
@@ -66,6 +68,8 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         switch (loader.getId()) {
             case TEAM_LOADER:
+                Map<Long, Position> playerPositionMap = new HashMap<Long, Position>(Position.values().length);
+
                 while (data.moveToNext()) {
                     Long playerId = data.getLong(data.getColumnIndex(Team.PLAYER_ID));
                     Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.POSITION)));
@@ -73,22 +77,29 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
 
                     teamPlayerIds.add(playerId);
                     if (active) {
-                        getTeamMap().put(playerId, position);
+                        playerPositionMap.put(playerId, position);
                     }
                 }
 
+                adapter.setPlayerPositionMap(playerPositionMap);
                 getLoaderManager().initLoader(PLAYERS_LOADER, null, this);
 
                 break;
             case PLAYERS_LOADER:
+                List<Player> teamPlayers = new LinkedList<Player>();
+                List<Player> otherPlayers = new LinkedList<Player>();
+
                 while (data.moveToNext()) {
                     Player player = new Player(data.getLong(data.getColumnIndex(Player.ID)), data.getString(data.getColumnIndex(Player.NAME)));
                     if (teamPlayerIds.contains(player.getId())) {
-                        adapter.addTeamPlayer(player);
+                        teamPlayers.add(player);
                     } else {
-                        adapter.addOtherPlayer(player);
+                        otherPlayers.add(player);
                     }
                 }
+
+                adapter.putPlayers(TEAM_HEADING, teamPlayers);
+                adapter.putPlayers(PLAYERS_HEADING, otherPlayers);
 
                 break;
             default:
@@ -104,7 +115,7 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
                 getTeamMap().clear();
                 break;
             case PLAYERS_LOADER:
-                adapter.clearAll();
+                adapter.clearPlayers();
                 break;
             default:
                 throw new IllegalArgumentException("No Loader registered for " + loader.getId());
