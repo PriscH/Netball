@@ -61,7 +61,7 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case TEAM_LOADER:
-                return teamMemberRepository.getActiveTeam();
+                return teamMemberRepository.getTeamForGameLoader(getIntent().getLongExtra(GAME_KEY, 0));
             case PLAYERS_LOADER:
                 return playerRepository.getAllPlayers();
             default:
@@ -76,13 +76,11 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
                 Map<Long, Position> playerPositionMap = new HashMap<Long, Position>(Position.values().length);
 
                 while (data.moveToNext()) {
-                    Long playerId = data.getLong(data.getColumnIndex(TeamMember.PLAYER_ID));
-                    Position position = Position.fromAcronym(data.getString(data.getColumnIndex(TeamMember.POSITION)));
-                    Boolean active = (data.getInt(data.getColumnIndex(TeamMember.ACTIVE)) > 0);
+                    TeamMember teamMember = new TeamMember(data);
 
-                    teamPlayerIds.add(playerId);
-                    if (active) {
-                        playerPositionMap.put(playerId, position);
+                    teamPlayerIds.add(teamMember.getPlayerId());
+                    if (teamMember.isActive()) {
+                        playerPositionMap.put(teamMember.getPlayerId(), teamMember.getPosition());
                     }
                 }
 
