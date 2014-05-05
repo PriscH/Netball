@@ -34,12 +34,12 @@ public class SubstitutionAdapter extends BaseAdapter {
 
     // ===== Own Interface =====
 
-    public void addTeamPlayers(List<Player> teamPlayers) {
-        this.teamPlayers.addAll(teamPlayers);
+    public void addTeamPlayer(Player teamPlayer) {
+        this.teamPlayers.add(teamPlayer);
     }
 
-    public void addOtherPlayers(List<Player> otherPlayers) {
-        this.otherPlayers.addAll(otherPlayers);
+    public void addOtherPlayer(Player otherPlayer) {
+        this.otherPlayers.add(otherPlayer);
     }
 
     public void clearAll() {
