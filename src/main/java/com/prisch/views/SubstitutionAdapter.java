@@ -36,15 +36,21 @@ public class SubstitutionAdapter extends BaseAdapter {
 
     public void addTeamPlayer(Player teamPlayer) {
         this.teamPlayers.add(teamPlayer);
+
+        this.notifyDataSetChanged();
     }
 
     public void addOtherPlayer(Player otherPlayer) {
         this.otherPlayers.add(otherPlayer);
+
+        this.notifyDataSetChanged();
     }
 
     public void clearAll() {
         this.teamPlayers.clear();
         this.otherPlayers.clear();
+
+        this.notifyDataSetChanged();
     }
 
     // ===== Inherited Operations =====
