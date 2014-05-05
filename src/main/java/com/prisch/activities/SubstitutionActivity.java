@@ -3,12 +3,14 @@ package com.prisch.activities;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import com.prisch.model.Player;
 import com.prisch.model.Position;
-import com.prisch.model.Team;
+import com.prisch.model.TeamMember;
 import com.prisch.repositories.PlayerRepository;
-import com.prisch.repositories.TeamRepository;
+import com.prisch.repositories.TeamMemberRepository;
 import com.prisch.views.TeamAdapter;
 
 import java.util.*;
@@ -23,7 +25,7 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     private static final int TEAM_LOADER = 0;
     private static final int PLAYERS_LOADER = 1;
 
-    private TeamRepository teamRepository;
+    private TeamMemberRepository teamMemberRepository;
     private PlayerRepository playerRepository;
 
     private Set<Long> teamPlayerIds = new HashSet<Long>();
@@ -40,8 +42,15 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        teamRepository = new TeamRepository(this);
+        teamMemberRepository = new TeamMemberRepository(this);
         playerRepository = new PlayerRepository(this);
+
+        findDoneButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                acceptTeam();
+            }
+        });
 
         getLoaderManager().initLoader(TEAM_LOADER, null, this);
     }
@@ -52,7 +61,7 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case TEAM_LOADER:
-                return teamRepository.getActiveTeam();
+                return teamMemberRepository.getActiveTeam();
             case PLAYERS_LOADER:
                 return playerRepository.getAllPlayers();
             default:
@@ -67,9 +76,9 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
                 Map<Long, Position> playerPositionMap = new HashMap<Long, Position>(Position.values().length);
 
                 while (data.moveToNext()) {
-                    Long playerId = data.getLong(data.getColumnIndex(Team.PLAYER_ID));
-                    Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.POSITION)));
-                    Boolean active = (data.getInt(data.getColumnIndex(Team.ACTIVE)) > 0);
+                    Long playerId = data.getLong(data.getColumnIndex(TeamMember.PLAYER_ID));
+                    Position position = Position.fromAcronym(data.getString(data.getColumnIndex(TeamMember.POSITION)));
+                    Boolean active = (data.getInt(data.getColumnIndex(TeamMember.ACTIVE)) > 0);
 
                     teamPlayerIds.add(playerId);
                     if (active) {
@@ -115,5 +124,22 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
             default:
                 throw new IllegalArgumentException("No Loader registered for " + loader.getId());
         }
+    }
+
+    // ===== Helpers =====
+
+    private void acceptTeam() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                teamMemberRepository.updateTeam(getIntent().getLongExtra(GAME_KEY, 0), getPlayerPositionMap());
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                finish();
+            }
+        }.execute();
     }
 }

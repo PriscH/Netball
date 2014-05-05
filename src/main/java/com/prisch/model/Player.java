@@ -4,8 +4,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class Player {
 
-    // ===== Fields =====
-
     private final long id;
     private final String name;
 

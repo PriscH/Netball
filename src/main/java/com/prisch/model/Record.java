@@ -29,10 +29,10 @@ public class Record {
     public static final String ACTION = "action";
 
     public static final String TABLE = "record";
-    public static final String TABLE_JOIN_TEAM_JOIN_PLAYER = String.format("%s LEFT OUTER JOIN %s", TABLE, Team.TABLE)
-                                                             + String.format(" ON (%s = %s)", prefixTable(TEAM_ID), Team.prefixTable(Team.ID))
+    public static final String TABLE_JOIN_TEAM_JOIN_PLAYER = String.format("%s LEFT OUTER JOIN %s", TABLE, TeamMember.TABLE)
+                                                             + String.format(" ON (%s = %s)", prefixTable(TEAM_ID), TeamMember.prefixTable(TeamMember.ID))
                                                              + String.format(" LEFT OUTER JOIN %s", Player.TABLE)
-                                                             + String.format(" ON (%s = %s)", Team.prefixTable(Team.PLAYER_ID), Player.prefixTable(Player.ID));
+                                                             + String.format(" ON (%s = %s)", TeamMember.prefixTable(TeamMember.PLAYER_ID), Player.prefixTable(Player.ID));
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
                                                 + ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, "

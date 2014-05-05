@@ -7,12 +7,12 @@ import com.prisch.model.*;
 public class StatsRepository {
 
     private Context context;
-    private TeamRepository teamRepository;
+    private TeamMemberRepository teamMemberRepository;
     private RecordRepository recordRepository;
 
     public StatsRepository(Context context) {
         this.context = context;
-        this.teamRepository = new TeamRepository(context);
+        this.teamMemberRepository = new TeamMemberRepository(context);
         this.recordRepository = new RecordRepository(context);
     }
 
@@ -25,7 +25,7 @@ public class StatsRepository {
         Cursor recordsCursor = recordRepository.getRecordsForGame(gameId);
         while (recordsCursor.moveToNext()) {
             String playerName = recordsCursor.getString(recordsCursor.getColumnIndex(Player.NAME));
-            Position playerPosition = Position.fromAcronym(recordsCursor.getString(recordsCursor.getColumnIndex(Team.POSITION)));
+            Position playerPosition = Position.fromAcronym(recordsCursor.getString(recordsCursor.getColumnIndex(TeamMember.POSITION)));
             Action playerAction = Action.fromString(recordsCursor.getString(recordsCursor.getColumnIndex(Record.ACTION)));
 
             PlayerStats playerStats = gameStats.getOrCreate(playerName, playerPosition);
@@ -33,10 +33,10 @@ public class StatsRepository {
         }
 
         // Add any players for whom no actions were recorded, but that are included in the team
-        Cursor teamCursor = teamRepository.getTeamForGame(gameId);
+        Cursor teamCursor = teamMemberRepository.getTeamForGame(gameId);
         while (teamCursor.moveToNext()) {
             String playerName = teamCursor.getString(teamCursor.getColumnIndex(Player.NAME));
-            Position playerPosition = Position.fromAcronym(teamCursor.getString(teamCursor.getColumnIndex(Team.POSITION)));
+            Position playerPosition = Position.fromAcronym(teamCursor.getString(teamCursor.getColumnIndex(TeamMember.POSITION)));
             gameStats.getOrCreate(playerName, playerPosition);
         }
 

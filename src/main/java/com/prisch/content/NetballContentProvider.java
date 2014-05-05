@@ -10,7 +10,7 @@ import android.net.Uri;
 import com.prisch.model.Game;
 import com.prisch.model.Player;
 import com.prisch.model.Record;
-import com.prisch.model.Team;
+import com.prisch.model.TeamMember;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class NetballContentProvider extends ContentProvider {
     static {
         URI_QUERY_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
         URI_QUERY_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
-        URI_QUERY_TABLE_MAP.put(CODE_TEAMS, Team.TABLE_JOIN_PLAYERS);
+        URI_QUERY_TABLE_MAP.put(CODE_TEAMS, TeamMember.TABLE_JOIN_PLAYERS);
         URI_QUERY_TABLE_MAP.put(CODE_RECORDS, Record.TABLE_JOIN_TEAM_JOIN_PLAYER);
     }
 
@@ -54,7 +54,7 @@ public class NetballContentProvider extends ContentProvider {
     static {
         URI_WRITE_TABLE_MAP.put(CODE_PLAYERS, Player.TABLE);
         URI_WRITE_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
-        URI_WRITE_TABLE_MAP.put(CODE_TEAMS, Team.TABLE);
+        URI_WRITE_TABLE_MAP.put(CODE_TEAMS, TeamMember.TABLE);
         URI_WRITE_TABLE_MAP.put(CODE_RECORDS, Record.TABLE);
     }
 
@@ -163,10 +163,10 @@ public class NetballContentProvider extends ContentProvider {
     // ===== Query Operations =====
 
     private Cursor getActiveTeam() {
-        final String QUERY = String.format("SELECT %s, %s FROM %s", Team.prefixTable("*"), Player.prefixTable(Player.NAME), Team.TABLE_JOIN_PLAYERS)
-                             + String.format(" WHERE %s IN", Team.GAME_ID)
+        final String QUERY = String.format("SELECT %s, %s FROM %s", TeamMember.prefixTable("*"), Player.prefixTable(Player.NAME), TeamMember.TABLE_JOIN_PLAYERS)
+                             + String.format(" WHERE %s IN", TeamMember.GAME_ID)
                              + String.format(" (SELECT %s FROM %s WHERE %s = 1)", Game.ID, Game.TABLE, Game.ACTIVE)
-                             + String.format(" AND %s = 1", Team.prefixTable(Team.ACTIVE));
+                             + String.format(" AND %s = 1", TeamMember.prefixTable(TeamMember.ACTIVE));
 
         return databaseHelper.getWritableDatabase().rawQuery(QUERY, null);
     }

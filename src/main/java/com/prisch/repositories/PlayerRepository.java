@@ -12,12 +12,12 @@ public class PlayerRepository {
 
     private Context context;
 
-    private TeamRepository teamRepository;
+    private TeamMemberRepository teamMemberRepository;
 
     public PlayerRepository(Context context) {
         this.context = context;
 
-        this.teamRepository = new TeamRepository(context);
+        this.teamMemberRepository = new TeamMemberRepository(context);
     }
 
     // ===== Interface =====

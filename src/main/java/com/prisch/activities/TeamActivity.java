@@ -14,7 +14,7 @@ import android.widget.EditText;
 import com.prisch.model.Player;
 import com.prisch.repositories.GameRepository;
 import com.prisch.repositories.PlayerRepository;
-import com.prisch.repositories.TeamRepository;
+import com.prisch.repositories.TeamMemberRepository;
 import com.prisch.views.TeamAdapter;
 
 import java.util.Date;
@@ -29,7 +29,7 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
     private PlayerRepository playerRepository;
     private GameRepository gameRepository;
-    private TeamRepository teamRepository;
+    private TeamMemberRepository teamMemberRepository;
 
     // ===== Inherited Operations =====
 
@@ -45,7 +45,7 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
         playerRepository = new PlayerRepository(this);
         gameRepository = new GameRepository(this);
-        teamRepository = new TeamRepository(this);
+        teamMemberRepository = new TeamMemberRepository(this);
 
         findDoneButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +112,7 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
     private void acceptTeam(String name) {
         long gameId = gameRepository.createGame(new Date(), name, true);
-        teamRepository.createTeam(gameId, getPlayerPositionMap());
+        teamMemberRepository.createTeam(gameId, getPlayerPositionMap());
 
         Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
         startActivity(positionsIntent);

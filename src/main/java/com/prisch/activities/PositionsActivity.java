@@ -14,8 +14,8 @@ import android.widget.Button;
 import com.prisch.R;
 import com.prisch.model.Player;
 import com.prisch.model.Position;
-import com.prisch.model.Team;
-import com.prisch.repositories.TeamRepository;
+import com.prisch.model.TeamMember;
+import com.prisch.repositories.TeamMemberRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
         POSITION_BUTTON_MAP.put(Position.GK, R.id.button_goalKeeper);
     }
 
-    private TeamRepository teamRepository;
+    private TeamMemberRepository teamMemberRepository;
 
     // Map from a Position to the Team assignment ID (Player and Position) currently assigned to that Position
     private Map<Position, Long> positionMap = new HashMap<Position, Long>(7);
@@ -49,7 +49,7 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.positions);
 
-        teamRepository = new TeamRepository(this);
+        teamMemberRepository = new TeamMemberRepository(this);
 
         getLoaderManager().initLoader(TEAM_LOADER, null, this);
     }
@@ -62,19 +62,19 @@ public class PositionsActivity extends Activity implements LoaderManager.LoaderC
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return teamRepository.getActiveTeam();
+        return teamMemberRepository.getActiveTeam();
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         positionMap.clear();
         while (data.moveToNext()) {
-            Position position = Position.fromAcronym(data.getString(data.getColumnIndex(Team.POSITION)));
-            Long teamAssignmentId = data.getLong(data.getColumnIndex(Team.ID));
+            Position position = Position.fromAcronym(data.getString(data.getColumnIndex(TeamMember.POSITION)));
+            Long teamAssignmentId = data.getLong(data.getColumnIndex(TeamMember.ID));
             String playerName = data.getString(data.getColumnIndex(Player.NAME));
             configureButton(position, teamAssignmentId, playerName);
 
-            gameId = data.getLong(data.getColumnIndex(Team.GAME_ID));
+            gameId = data.getLong(data.getColumnIndex(TeamMember.GAME_ID));
         }
     }
 

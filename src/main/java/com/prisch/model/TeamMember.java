@@ -1,8 +1,55 @@
 package com.prisch.model;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class Team {
+public class TeamMember {
+
+    private final long id;
+    private final long gameId;
+    private final long playerId;
+    private final Position position;
+    private final boolean active;
+
+    // ===== Constructors =====
+
+    public TeamMember(Cursor cursor) {
+        this.id = cursor.getLong(cursor.getColumnIndex(ID));
+        this.gameId = cursor.getLong(cursor.getColumnIndex(GAME_ID));
+        this.playerId = cursor.getLong(cursor.getColumnIndex(PLAYER_ID));
+        this.position = Position.fromAcronym(cursor.getString(cursor.getColumnIndex(POSITION)));
+        this.active = (cursor.getInt(cursor.getColumnIndex(ACTIVE)) > 0);
+    }
+
+    public TeamMember(long id, long gameId, long playerId, Position position, boolean active) {
+        this.id = id;
+        this.gameId = gameId;
+        this.playerId = playerId;
+        this.position = position;
+        this.active = active;
+    }
+
+    // ===== Accessors =====
+
+    public long getId() {
+        return id;
+    }
+
+    public long getGameId() {
+        return gameId;
+    }
+
+    public long getPlayerId() {
+        return playerId;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
 
     // ===== Convenience Methods =====
 
@@ -29,7 +76,7 @@ public class Team {
     public static final String POSITION = "position";
     public static final String ACTIVE = "active";
 
-    public static final String TABLE = "team";
+    public static final String TABLE = "team_member";
     public static final String TABLE_JOIN_PLAYERS = String.format("%s LEFT OUTER JOIN %s", TABLE, Player.TABLE)
                                                     + String.format(" ON (%s = %s)", prefixTable(PLAYER_ID), Player.prefixTable(Player.ID));
 

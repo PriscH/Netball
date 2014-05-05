@@ -8,7 +8,7 @@ import android.net.Uri;
 import com.prisch.content.NetballContentProvider;
 import com.prisch.model.Action;
 import com.prisch.model.Record;
-import com.prisch.model.Team;
+import com.prisch.model.TeamMember;
 
 import java.util.Date;
 
@@ -33,7 +33,7 @@ public class RecordRepository {
     }
 
     public Cursor getRecordsForGame(Long gameId) {
-        String where = Team.GAME_ID + "=?";
+        String where = TeamMember.GAME_ID + "=?";
         String[] parameters = new String[] {gameId.toString()};
         return context.getContentResolver().query(NetballContentProvider.URI_RECORDS, null, where, parameters, null);
     }
