@@ -88,13 +88,13 @@ public class TeamMemberRepository {
         String where = TeamMember.GAME_ID + "=?";
         String[] parameters = new String[] {Long.toString(gameId)};
 
-        return context.getContentResolver().query(NetballContentProvider.URI_TEAMS, null, where, parameters, null);
+        return context.getContentResolver().query(NetballContentProvider.URI_TEAMS, TeamMember.DEFAULT_PROJECTION, where, parameters, null);
     }
 
     public Loader<Cursor> getTeamForGameLoader(long gameId) {
         String where = TeamMember.GAME_ID + "=?";
         String[] parameters = new String[] {Long.toString(gameId)};
 
-        return new CursorLoader(context, NetballContentProvider.URI_TEAMS, null, where, parameters, null);
+        return new CursorLoader(context, NetballContentProvider.URI_TEAMS, TeamMember.DEFAULT_PROJECTION, where, parameters, null);
     }
 }

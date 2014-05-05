@@ -36,7 +36,7 @@ public class StatsRepository {
         Cursor teamCursor = teamMemberRepository.getTeamForGame(gameId);
         while (teamCursor.moveToNext()) {
             String playerName = teamCursor.getString(teamCursor.getColumnIndex(Player.NAME));
-            Position playerPosition = Position.fromAcronym(teamCursor.getString(teamCursor.getColumnIndex(TeamMember.POSITION)));
+            Position playerPosition = Position.fromAcronym(teamCursor.getString(teamCursor.getColumnIndex(TeamMember.prefixAlias(TeamMember.POSITION))));
             gameStats.getOrCreate(playerName, playerPosition);
         }
 

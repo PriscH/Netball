@@ -14,11 +14,11 @@ public class TeamMember {
     // ===== Constructors =====
 
     public TeamMember(Cursor cursor) {
-        this.id = cursor.getLong(cursor.getColumnIndex(ID));
-        this.gameId = cursor.getLong(cursor.getColumnIndex(GAME_ID));
-        this.playerId = cursor.getLong(cursor.getColumnIndex(PLAYER_ID));
-        this.position = Position.fromAcronym(cursor.getString(cursor.getColumnIndex(POSITION)));
-        this.active = (cursor.getInt(cursor.getColumnIndex(ACTIVE)) > 0);
+        this.id = cursor.getLong(cursor.getColumnIndex(TeamMember.prefixAlias(ID)));
+        this.gameId = cursor.getLong(cursor.getColumnIndex(TeamMember.prefixAlias(GAME_ID)));
+        this.playerId = cursor.getLong(cursor.getColumnIndex(TeamMember.prefixAlias(PLAYER_ID)));
+        this.position = Position.fromAcronym(cursor.getString(cursor.getColumnIndex(TeamMember.prefixAlias(POSITION))));
+        this.active = (cursor.getInt(cursor.getColumnIndex(TeamMember.prefixAlias(ACTIVE))) > 0);
     }
 
     public TeamMember(long id, long gameId, long playerId, Position position, boolean active) {
@@ -57,6 +57,10 @@ public class TeamMember {
         return TABLE + "." + column;
     }
 
+    public static String prefixAlias(String column) {
+        return TABLE + "_" + column;
+    }
+
     // ===== Database Scaffolding =====
 
     public static void onCreate(SQLiteDatabase db) {
@@ -79,6 +83,15 @@ public class TeamMember {
     public static final String TABLE = "team_member";
     public static final String TABLE_JOIN_PLAYERS = String.format("%s LEFT OUTER JOIN %s", TABLE, Player.TABLE)
                                                     + String.format(" ON (%s = %s)", prefixTable(PLAYER_ID), Player.prefixTable(Player.ID));
+
+    public static final String[] DEFAULT_PROJECTION = new String [] {
+        String.format("%s AS %s", prefixTable(ID), prefixAlias(ID)),
+        String.format("%s AS %s", prefixTable(GAME_ID), prefixAlias(GAME_ID)),
+        String.format("%s AS %s", prefixTable(PLAYER_ID), prefixAlias(PLAYER_ID)),
+        String.format("%s AS %s", prefixTable(POSITION), prefixAlias(POSITION)),
+        String.format("%s AS %s", prefixTable(ACTIVE), prefixAlias(ACTIVE)),
+        Player.NAME
+    };
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
                                                 + ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, "
