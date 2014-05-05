@@ -4,8 +4,6 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ListView;
-import com.prisch.R;
 import com.prisch.model.Player;
 import com.prisch.model.Position;
 import com.prisch.model.Team;
@@ -28,24 +26,22 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
     private TeamRepository teamRepository;
     private PlayerRepository playerRepository;
 
-    private ListView listView;
-    private TeamAdapter adapter;
-
     private Set<Long> teamPlayerIds = new HashSet<Long>();
+
+    // ===== Inherited Operations =====
+
+    protected TeamAdapter createAdapter() {
+        return new TeamAdapter(this, new String[] {TEAM_HEADING, PLAYERS_HEADING});
+    }
 
     // ===== Lifecycle Methods =====
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.players);
 
         teamRepository = new TeamRepository(this);
         playerRepository = new PlayerRepository(this);
-
-        adapter = new TeamAdapter(this, new String[] {TEAM_HEADING, PLAYERS_HEADING});
-        listView = (ListView)findViewById(R.id.listview_players);
-        listView.setAdapter(adapter);
 
         getLoaderManager().initLoader(TEAM_LOADER, null, this);
     }
@@ -81,7 +77,7 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
                     }
                 }
 
-                adapter.setPlayerPositionMap(playerPositionMap);
+                initialisePlayerPositionMap(playerPositionMap);
                 getLoaderManager().initLoader(PLAYERS_LOADER, null, this);
 
                 break;
@@ -98,8 +94,8 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
                     }
                 }
 
-                adapter.putPlayers(TEAM_HEADING, teamPlayers);
-                adapter.putPlayers(PLAYERS_HEADING, otherPlayers);
+                getAdapter().putPlayers(TEAM_HEADING, teamPlayers);
+                getAdapter().putPlayers(PLAYERS_HEADING, otherPlayers);
 
                 break;
             default:
@@ -112,10 +108,9 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
         switch (loader.getId()) {
             case TEAM_LOADER:
                 teamPlayerIds.clear();
-                getTeamMap().clear();
                 break;
             case PLAYERS_LOADER:
-                adapter.clearPlayers();
+                getAdapter().clearPlayers();
                 break;
             default:
                 throw new IllegalArgumentException("No Loader registered for " + loader.getId());

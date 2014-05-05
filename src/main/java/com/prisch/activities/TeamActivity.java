@@ -10,48 +10,42 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
-import com.prisch.R;
+import android.widget.EditText;
 import com.prisch.model.Player;
 import com.prisch.repositories.GameRepository;
 import com.prisch.repositories.PlayerRepository;
 import com.prisch.repositories.TeamRepository;
+import com.prisch.views.TeamAdapter;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TeamActivity extends BaseTeamActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int PLAYER_LOADER = 0;
 
+    private static final String DEFAULT_HEADING = "Default";
+
     private PlayerRepository playerRepository;
     private GameRepository gameRepository;
     private TeamRepository teamRepository;
 
-    private CursorAdapter adapter;
+    // ===== Inherited Operations =====
 
-
+    protected TeamAdapter createAdapter() {
+        return new TeamAdapter(this, new String[] {DEFAULT_HEADING}, false);
+    }
 
     // ===== Lifecycle Methods =====
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.players);
 
         playerRepository = new PlayerRepository(this);
         gameRepository = new GameRepository(this);
         teamRepository = new TeamRepository(this);
-
-        adapter = new SimpleCursorAdapter(this, R.layout.list_players, null, new String[] {Player.NAME}, new int[] {R.id.text_playerName}, 0);
-
-        ListView listView = (ListView)findViewById(R.id.listview_players);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                togglePlayerPosition(id, (TextView)view.findViewById(R.id.text_playerPosition));
-            }
-        });
 
         findDoneButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +64,16 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
+        List<Player> players = new LinkedList<Player>();
+        while (data.moveToNext()) {
+            players.add(new Player(data.getLong(data.getColumnIndex(Player.ID)), data.getString(data.getColumnIndex(Player.NAME))));
+        }
+        getAdapter().putPlayers(DEFAULT_HEADING, players);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
+        getAdapter().clearPlayers();
     }
 
     // ===== Event Handlers =====
@@ -114,7 +112,7 @@ public class TeamActivity extends BaseTeamActivity implements LoaderManager.Load
 
     private void acceptTeam(String name) {
         long gameId = gameRepository.createGame(new Date(), name, true);
-        teamRepository.createTeam(gameId, getTeamMap());
+        teamRepository.createTeam(gameId, getPlayerPositionMap());
 
         Intent positionsIntent = new Intent(getApplicationContext(), PositionsActivity.class);
         startActivity(positionsIntent);
