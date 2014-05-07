@@ -6,9 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import com.prisch.content.NetballContentProvider;
-import com.prisch.model.Action;
-import com.prisch.model.Record;
-import com.prisch.model.TeamMember;
+import com.prisch.model.*;
 
 import java.util.Date;
 
@@ -16,13 +14,33 @@ public class RecordRepository {
 
     private Context context;
 
+    private GameRepository gameRepository;
+
     public RecordRepository(Context context) {
         this.context = context;
+
+        this.gameRepository = new GameRepository(context);
     }
 
     // ===== Interface =====
 
     public long createRecord(Date date, Long teamAssignmentId, Action action) {
+        if (action == Action.GOAL) {
+            long gameId = 0;
+            long teamScore = 0;
+            long opponentScore = 0;
+
+            Cursor activeGameCursor = gameRepository.getActiveGame();
+            if (activeGameCursor.moveToNext()) {
+                gameId = activeGameCursor.getLong(activeGameCursor.getColumnIndex(Game.ID));
+                teamScore = activeGameCursor.getLong(activeGameCursor.getColumnIndex(Game.TEAM_SCORE));
+                opponentScore = activeGameCursor.getLong(activeGameCursor.getColumnIndex(Game.OPPONENT_SCORE));
+            }
+
+            ++teamScore;
+            gameRepository.updateGameScores(gameId, teamScore, opponentScore);
+        }
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(Record.DATE, date.getTime());
         contentValues.put(Record.TEAM_ID, teamAssignmentId);

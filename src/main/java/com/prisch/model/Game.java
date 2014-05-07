@@ -26,15 +26,19 @@ public class Game {
     public static final String ID = "_id";
     public static final String DATE = "date";
     public static final String NAME = "name";
+    public static final String TEAM_SCORE = "team_score";
+    public static final String OPPONENT_SCORE = "opponent_score";
     public static final String ACTIVE = "active";
 
     public static final String TABLE = "game";
 
     private static final String CREATE_SCRIPT = "CREATE TABLE " + TABLE + " ("
-                                                + ID        + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                                + DATE      + " INTEGER NOT NULL UNIQUE,"
-                                                + NAME      + " TEXT NOT NULL,"
-                                                + ACTIVE    + " NUMERIC NOT NULL);";
+                                                + ID             + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                                + DATE           + " INTEGER NOT NULL UNIQUE,"
+                                                + NAME           + " TEXT NOT NULL,"
+                                                + TEAM_SCORE     + " INTEGER NOT NULL,"
+                                                + OPPONENT_SCORE + " INTEGER NOT NULL,"
+                                                + ACTIVE         + " NUMERIC NOT NULL);";
     private static final String DROP_SCRIPT = "DROP TABLE " + TABLE;
 
 }

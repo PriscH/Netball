@@ -7,10 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import com.prisch.model.Game;
-import com.prisch.model.Player;
-import com.prisch.model.Record;
-import com.prisch.model.TeamMember;
+import com.prisch.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +23,14 @@ public class NetballContentProvider extends ContentProvider {
     private static final int CODE_TEAMS = 3;
     private static final int CODE_ACTIVE_TEAM = 301;
     private static final int CODE_RECORDS = 4;
+    private static final int CODE_OPPONENT_RECORDS = 5;
 
     private static final String PATH_PLAYERS = "players";
     private static final String PATH_GAMES = "games";
     private static final String PATH_TEAMS = "teams";
     private static final String PATH_ACTIVE_TEAM = PATH_TEAMS + "/active";
     private static final String PATH_RECORDS = "records";
+    private static final String PATH_OPPONENT_RECORDS = "opponentRecords";
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -40,6 +39,7 @@ public class NetballContentProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, PATH_TEAMS, CODE_TEAMS);
         URI_MATCHER.addURI(AUTHORITY, PATH_ACTIVE_TEAM, CODE_ACTIVE_TEAM);
         URI_MATCHER.addURI(AUTHORITY, PATH_RECORDS, CODE_RECORDS);
+        URI_MATCHER.addURI(AUTHORITY, PATH_OPPONENT_RECORDS, CODE_OPPONENT_RECORDS);
     }
 
     private static final Map<Integer, String> URI_QUERY_TABLE_MAP = new HashMap<Integer, String>();
@@ -48,6 +48,7 @@ public class NetballContentProvider extends ContentProvider {
         URI_QUERY_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
         URI_QUERY_TABLE_MAP.put(CODE_TEAMS, TeamMember.TABLE_JOIN_PLAYERS);
         URI_QUERY_TABLE_MAP.put(CODE_RECORDS, Record.TABLE_JOIN_TEAM_JOIN_PLAYER);
+        URI_QUERY_TABLE_MAP.put(CODE_OPPONENT_RECORDS, OpponentRecord.TABLE);
     }
 
     private static final Map<Integer, String> URI_WRITE_TABLE_MAP = new HashMap<Integer, String>();
@@ -56,6 +57,7 @@ public class NetballContentProvider extends ContentProvider {
         URI_WRITE_TABLE_MAP.put(CODE_GAMES, Game.TABLE);
         URI_WRITE_TABLE_MAP.put(CODE_TEAMS, TeamMember.TABLE);
         URI_WRITE_TABLE_MAP.put(CODE_RECORDS, Record.TABLE);
+        URI_WRITE_TABLE_MAP.put(CODE_OPPONENT_RECORDS, OpponentRecord.TABLE);
     }
 
     private static final Map<Integer, String> URI_PATH_MAP = new HashMap<Integer, String>();
@@ -64,6 +66,7 @@ public class NetballContentProvider extends ContentProvider {
         URI_PATH_MAP.put(CODE_GAMES, PATH_GAMES);
         URI_PATH_MAP.put(CODE_TEAMS, PATH_TEAMS);
         URI_PATH_MAP.put(CODE_RECORDS, PATH_RECORDS);
+        URI_PATH_MAP.put(CODE_OPPONENT_RECORDS, PATH_OPPONENT_RECORDS);
     }
 
     // ===== Exposed Constants =====
@@ -73,6 +76,7 @@ public class NetballContentProvider extends ContentProvider {
     public static final Uri URI_TEAMS = Uri.parse("content://" + AUTHORITY + "/" + PATH_TEAMS);
     public static final Uri URI_ACTIVE_TEAM = Uri.parse("content://" + AUTHORITY + "/" + PATH_ACTIVE_TEAM);
     public static final Uri URI_RECORDS = Uri.parse("content://" + AUTHORITY + "/" + PATH_RECORDS);
+    public static final Uri URI_OPPONENT_RECORDS = Uri.parse("content://" + AUTHORITY + "/" + PATH_OPPONENT_RECORDS);
 
     // ===== Fields =====
 

@@ -39,7 +39,7 @@ public class DashboardActivity extends Activity implements LoaderManager.LoaderC
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return gameRepository.getActiveGame();
+        return gameRepository.getActiveGameLoader();
     }
 
     @Override
