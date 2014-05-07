@@ -9,14 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import com.prisch.R;
-import com.prisch.model.Game;
 import com.prisch.repositories.GameRepository;
-import com.prisch.util.DateUtils;
-
-import java.util.Date;
+import com.prisch.views.GameAdapter;
 
 public class GamesActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -24,7 +19,7 @@ public class GamesActivity extends Activity implements LoaderManager.LoaderCallb
 
     private GameRepository gameRepository;
 
-    private SimpleCursorAdapter adapter;
+    private GameAdapter adapter;
 
     // ===== Lifecycle Methods =====
 
@@ -35,18 +30,7 @@ public class GamesActivity extends Activity implements LoaderManager.LoaderCallb
 
         gameRepository = new GameRepository(this);
 
-        adapter = new SimpleCursorAdapter(this, R.layout.list_games, null, new String[] {Game.NAME, Game.DATE}, new int[] {R.id.text_gameName, R.id.text_gameDate}, 0);
-        adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if (columnIndex == cursor.getColumnIndex(Game.DATE)) {
-                    TextView textView = (TextView)view;
-                    textView.setText(DateUtils.formatDate(new Date(cursor.getLong(columnIndex))));
-                    return true;
-                }
-                return false;
-            }
-        });
+        adapter = new GameAdapter(this, null);
 
         ListView listView = (ListView)findViewById(R.id.listview_games);
         listView.setAdapter(adapter);

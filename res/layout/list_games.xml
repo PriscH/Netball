@@ -26,4 +26,13 @@
         android:text="2014/04/19 23:00"
         android:id="@+id/text_gameDate"
         android:textColor="@android:color/primary_text_dark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RESULT 0 - 0"
+        android:id="@+id/text_gameResult"
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="18sp"
+        />
 </LinearLayout>
