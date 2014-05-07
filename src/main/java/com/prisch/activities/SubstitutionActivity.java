@@ -3,7 +3,6 @@ package com.prisch.activities;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import com.prisch.model.Player;
@@ -48,7 +47,13 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
         findDoneButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptTeam();
+                new Thread(new Runnable() {
+                    public void run() {
+                        teamMemberRepository.updateTeam(getIntent().getLongExtra(GAME_KEY, 0), getPlayerPositionMap());
+                    }
+                }).start();
+
+                finish();
             }
         });
 
@@ -122,22 +127,5 @@ public class SubstitutionActivity extends BaseTeamActivity implements LoaderMana
             default:
                 throw new IllegalArgumentException("No Loader registered for " + loader.getId());
         }
-    }
-
-    // ===== Helpers =====
-
-    private void acceptTeam() {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                teamMemberRepository.updateTeam(getIntent().getLongExtra(GAME_KEY, 0), getPlayerPositionMap());
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                finish();
-            }
-        }.execute();
     }
 }
